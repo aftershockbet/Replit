@@ -45,7 +45,7 @@ export default function TeamCard({ team, className }: TeamCardProps) {
           </div>
           
           <div className="flex gap-1 justify-center" data-testid={`streak-pattern-${team.id}`}>
-            {team.recentMatches.map((match, index) => (
+            {team.recentMatches.slice(0, 5).map((match, index) => (
               <StreakBadge 
                 key={index} 
                 result={match.result}
