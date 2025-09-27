@@ -49,6 +49,8 @@ export default function TeamCard({ team, className }: TeamCardProps) {
               <StreakBadge 
                 key={index} 
                 result={match.result}
+                opponent={match.opponent}
+                date={match.date}
                 className="transition-transform hover:scale-110"
               />
             ))}
