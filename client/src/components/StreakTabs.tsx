@@ -36,11 +36,7 @@ export default function StreakTabs({
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger 
           value="winning" 
-          className={`flex items-center gap-2 ${
-            activeTab === 'winning' 
-              ? 'data-[state=active]:bg-green-600/20 data-[state=active]:text-green-400 data-[state=active]:border-green-500/30' 
-              : ''
-          }`}
+          className="flex items-center gap-2 data-[state=active]:bg-[#40af0f] data-[state=active]:text-white dark:data-[state=active]:bg-green-600/20 dark:data-[state=active]:text-green-400 dark:data-[state=active]:border-green-500/30"
           data-testid="tab-winning-streaks"
         >
           <Trophy className="h-4 w-4" />
@@ -52,11 +48,7 @@ export default function StreakTabs({
         
         <TabsTrigger 
           value="drawing" 
-          className={`flex items-center gap-2 ${
-            activeTab === 'drawing' 
-              ? 'data-[state=active]:bg-amber-600/20 data-[state=active]:text-amber-400 data-[state=active]:border-amber-500/30' 
-              : ''
-          }`}
+          className="flex items-center gap-2 data-[state=active]:bg-[#efb609] data-[state=active]:text-white dark:data-[state=active]:bg-amber-600/20 dark:data-[state=active]:text-amber-400 dark:data-[state=active]:border-amber-500/30"
           data-testid="tab-drawing-streaks"
         >
           <Minus className="h-4 w-4" />
