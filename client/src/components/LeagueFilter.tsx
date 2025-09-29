@@ -27,12 +27,10 @@ export default function LeagueFilter({
 
   const handleLeagueToggle = (leagueId: LeagueId) => {
     onLeagueToggle(leagueId);
-    console.log('League toggled:', leagueId); // todo: remove mock functionality
   };
 
   const handleClearAll = () => {
     onClearAll();
-    console.log('All leagues cleared'); // todo: remove mock functionality
   };
 
   return (

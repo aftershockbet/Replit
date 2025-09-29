@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import TeamCard from "./TeamCard";
 import PlayerCard from "./PlayerCard";
@@ -7,6 +7,8 @@ import LeagueFilter from "./LeagueFilter";
 import StreakTabs from "./StreakTabs";
 import StatusIndicator from "./StatusIndicator";
 import ThemeToggle from "./ThemeToggle";
+import StreakAlerts from "./StreakAlerts";
+import { useStreakAlerts, dismissTeamAlert, dismissPlayerAlert } from "@/hooks/use-streak-alerts";
 import { type TeamWithStreak, type PlayerWithStreak, type LeagueId, type StreakType } from "@shared/schema";
 import { AlertCircle } from "lucide-react";
 
@@ -28,6 +30,29 @@ export default function StreakDashboard({
   const [activeTab, setActiveTab] = useState<StreakType>('winning');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLeagues, setSelectedLeagues] = useState<LeagueId[]>([]);
+  
+  // Alert system for new teams/players
+  const alerts = useStreakAlerts(teams, players);
+  const [displayedNewTeams, setDisplayedNewTeams] = useState<TeamWithStreak[]>([]);
+  const [displayedNewPlayers, setDisplayedNewPlayers] = useState<PlayerWithStreak[]>([]);
+  
+  // Update displayed alerts when new ones arrive
+  useEffect(() => {
+    if (alerts.newTeams.length > 0) {
+      setDisplayedNewTeams(alerts.newTeams);
+    }
+    if (alerts.newPlayers.length > 0) {
+      setDisplayedNewPlayers(alerts.newPlayers);
+    }
+  }, [alerts]);
+  
+  const handleDismissTeamAlert = (teamId: string) => {
+    setDisplayedNewTeams(prev => dismissTeamAlert(teamId, prev));
+  };
+  
+  const handleDismissPlayerAlert = (playerId: string) => {
+    setDisplayedNewPlayers(prev => dismissPlayerAlert(playerId, prev));
+  };
 
   // Filter teams based on current filters
   const filteredTeams = useMemo(() => {
@@ -168,6 +193,15 @@ export default function StreakDashboard({
         </div>
 
         {/* Streak Tabs and Content */}
+        {/* Streak Alerts */}
+        <StreakAlerts
+          newTeams={displayedNewTeams}
+          newPlayers={displayedNewPlayers}
+          onDismissTeam={handleDismissTeamAlert}
+          onDismissPlayer={handleDismissPlayerAlert}
+          className="mb-6"
+        />
+        
         <StreakTabs
           activeTab={activeTab}
           onTabChange={setActiveTab}
