@@ -2,10 +2,11 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Link } from "wouter";
 import { type PlayerWithStreak, LEAGUES } from "@shared/schema";
+import { formatDate, formatFixtureDateTime, formatOdds } from "@shared/utils";
 import { Clock, ExternalLink, TrendingUp, Target } from "lucide-react";
-import { format, parseISO } from "date-fns";
-import { toZonedTime } from "date-fns-tz";
+import { parseISO } from "date-fns";
 
 interface PlayerCardProps {
   player: PlayerWithStreak;
@@ -14,23 +15,6 @@ interface PlayerCardProps {
 
 export default function PlayerCard({ player, className }: PlayerCardProps) {
   const league = LEAGUES[player.leagueId];
-  
-  // Format date and time for CET/CEST (Madrid timezone)
-  const formatFixtureDateTime = (isoDateString: string) => {
-    try {
-      const date = parseISO(isoDateString);
-      const madridTime = toZonedTime(date, 'Europe/Madrid');
-      const formattedDate = format(madridTime, 'dd/MM/yyyy');
-      const formattedTime = format(madridTime, 'HH:mm');
-      return { date: formattedDate, time: formattedTime };
-    } catch {
-      return { date: 'TBD', time: 'TBD' };
-    }
-  };
-  
-  // Format betting odds to 2 decimal places
-  const formatOdds = (odds: number) => odds.toFixed(2);
-  
   const { date: fixtureDate, time: fixtureTime } = formatFixtureDateTime(player.nextFixture.date);
   
   // Get position color
@@ -80,20 +64,18 @@ export default function PlayerCard({ player, className }: PlayerCardProps) {
               <span className="mr-1">{league.flag}</span>
               {league.name}
             </Badge>
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="text-xs h-7"
-              data-testid={`button-topscorers-${player.id}`}
-              onClick={() => {
-                // todo: remove mock functionality - implement real topscorers link
-                window.open(`/topscorers/${player.leagueId}`, '_blank');
-              }}
-            >
-              <span className="mr-1">{league.logo}</span>
-              <ExternalLink className="h-3 w-3 mr-1" />
-              Top Scorers
-            </Button>
+            <Link href={`/top-scorers/${player.leagueId}`}>
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="text-xs h-7"
+                data-testid={`button-topscorers-${player.id}`}
+              >
+                <span className="mr-1">{league.logo}</span>
+                <ExternalLink className="h-3 w-3 mr-1" />
+                Top Scorers
+              </Button>
+            </Link>
           </div>
         </div>
       </CardHeader>
@@ -123,7 +105,7 @@ export default function PlayerCard({ player, className }: PlayerCardProps) {
                   key={index} 
                   variant="secondary" 
                   className="text-xs px-2 py-1"
-                  title={`${goalGame.goals} goal${goalGame.goals > 1 ? 's' : ''} vs ${goalGame.opponent} on ${format(parseISO(goalGame.date), 'dd/MM/yyyy')}`}
+                  title={`${goalGame.goals} goal${goalGame.goals > 1 ? 's' : ''} vs ${goalGame.opponent} on ${formatDate(goalGame.date)}`}
                 >
                   ⚽ {goalGame.goals} vs {goalGame.opponent}
                 </Badge>

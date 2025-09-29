@@ -4,12 +4,16 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import StreakDashboardExample from "@/components/examples/StreakDashboard";
+import Standings from "@/pages/standings";
+import TopScorers from "@/pages/top-scorers";
 import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={StreakDashboardExample} />
+      <Route path="/standings/:leagueId" component={Standings} />
+      <Route path="/top-scorers/:leagueId" component={TopScorers} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>

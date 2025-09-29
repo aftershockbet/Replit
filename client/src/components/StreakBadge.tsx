@@ -1,17 +1,18 @@
 import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { type MatchResult } from "@shared/schema";
+import { formatDate } from "@shared/utils";
 import { cn } from "@/lib/utils";
-import { format, parseISO } from "date-fns";
 
 interface StreakBadgeProps {
   result: MatchResult;
   opponent?: string;
   date?: string;
+  score?: string;
   className?: string;
 }
 
-export default function StreakBadge({ result, opponent, date, className }: StreakBadgeProps) {
+export default function StreakBadge({ result, opponent, date, score, className }: StreakBadgeProps) {
   const getBadgeVariant = (result: MatchResult) => {
     switch (result) {
       case 'W':
@@ -38,7 +39,19 @@ export default function StreakBadge({ result, opponent, date, className }: Strea
     }
   };
 
-  const getResultText = (result: MatchResult) => {
+  const getResultText = (result: MatchResult, score?: string) => {
+    if (score) {
+      switch (result) {
+        case 'W':
+          return `Won ${score}`;
+        case 'D':
+          return `Drew ${score}`;
+        case 'L':
+          return `Lost ${score}`;
+        default:
+          return score;
+      }
+    }
     switch (result) {
       case 'W':
         return 'Win';
@@ -51,13 +64,6 @@ export default function StreakBadge({ result, opponent, date, className }: Strea
     }
   };
 
-  const formatDate = (dateString: string) => {
-    try {
-      return format(parseISO(dateString), 'MMM d, yyyy');
-    } catch {
-      return dateString;
-    }
-  };
 
   const badge = (
     <Badge 
@@ -87,7 +93,7 @@ export default function StreakBadge({ result, opponent, date, className }: Strea
       </TooltipTrigger>
       <TooltipContent>
         <div className="text-sm">
-          <div className="font-medium">{getResultText(result)}</div>
+          <div className="font-medium">{getResultText(result, score)}</div>
           {opponent && <div>vs {opponent}</div>}
           {date && <div className="text-muted-foreground">{formatDate(date)}</div>}
         </div>

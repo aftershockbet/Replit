@@ -54,18 +54,25 @@ export default function LeagueFilter({
           </Button>
         </DropdownMenuTrigger>
         
-        <DropdownMenuContent className="w-56" align="start">
-          {Object.entries(LEAGUES).map(([leagueId, league]) => (
-            <DropdownMenuCheckboxItem
-              key={leagueId}
-              checked={selectedLeagues.includes(leagueId as LeagueId)}
-              onCheckedChange={() => handleLeagueToggle(leagueId as LeagueId)}
-              data-testid={`checkbox-league-${leagueId}`}
-            >
-              <span className="mr-2">{league.flag}</span>
-              {league.name}
-            </DropdownMenuCheckboxItem>
-          ))}
+        <DropdownMenuContent className="w-56 max-h-96 overflow-y-auto" align="start">
+          {Object.entries(LEAGUES)
+            .sort((a, b) => {
+              // Sort by country first, then by league name
+              const countryCompare = a[1].country.localeCompare(b[1].country);
+              if (countryCompare !== 0) return countryCompare;
+              return a[1].name.localeCompare(b[1].name);
+            })
+            .map(([leagueId, league]) => (
+              <DropdownMenuCheckboxItem
+                key={leagueId}
+                checked={selectedLeagues.includes(leagueId as LeagueId)}
+                onCheckedChange={() => handleLeagueToggle(leagueId as LeagueId)}
+                data-testid={`checkbox-league-${leagueId}`}
+              >
+                <span className="mr-2">{league.flag}</span>
+                {league.name}
+              </DropdownMenuCheckboxItem>
+            ))}
         </DropdownMenuContent>
       </DropdownMenu>
       
