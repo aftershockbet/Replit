@@ -5,17 +5,45 @@ export type MatchResult = 'W' | 'D' | 'L';
 
 // League definitions
 export const LEAGUES = {
-  'premier-league': { name: 'Premier League', country: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
-  'la-liga': { name: 'La Liga', country: 'Spain', flag: '🇪🇸' },
-  'serie-a': { name: 'Serie A', country: 'Italy', flag: '🇮🇹' },
-  'bundesliga': { name: 'Bundesliga', country: 'Germany', flag: '🇩🇪' },
-  'ligue-1': { name: 'Ligue 1', country: 'France', flag: '🇫🇷' },
-  'liga-portugal': { name: 'Liga Portugal', country: 'Portugal', flag: '🇵🇹' },
-  'eredivisie': { name: 'Eredivisie', country: 'Netherlands', flag: '🇳🇱' },
-  'mls': { name: 'MLS', country: 'North America', flag: '🇺🇸' },
+  // First Division
+  'premier-league': { name: 'Premier League', country: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', logo: '⚽' },
+  'la-liga': { name: 'La Liga', country: 'Spain', flag: '🇪🇸', logo: '⚽' },
+  'serie-a': { name: 'Serie A', country: 'Italy', flag: '🇮🇹', logo: '⚽' },
+  'bundesliga': { name: 'Bundesliga', country: 'Germany', flag: '🇩🇪', logo: '⚽' },
+  'ligue-1': { name: 'Ligue 1', country: 'France', flag: '🇫🇷', logo: '⚽' },
+  'liga-portugal': { name: 'Liga Portugal', country: 'Portugal', flag: '🇵🇹', logo: '⚽' },
+  'eredivisie': { name: 'Eredivisie', country: 'Netherlands', flag: '🇳🇱', logo: '⚽' },
+  'mls': { name: 'MLS', country: 'North America', flag: '🇺🇸', logo: '⚽' },
+  
+  // Second Division
+  'ligue-2': { name: 'Ligue 2', country: 'France', flag: '🇫🇷', logo: '⚽' },
+  'serie-b': { name: 'Serie B', country: 'Italy', flag: '🇮🇹', logo: '⚽' },
+  'bundesliga-2': { name: '2. Bundesliga', country: 'Germany', flag: '🇩🇪', logo: '⚽' },
+  'eerste-divisie': { name: 'Eerste Divisie', country: 'Netherlands', flag: '🇳🇱', logo: '⚽' },
+  'pro-league-b': { name: 'Challenger Pro League', country: 'Belgium', flag: '🇧🇪', logo: '⚽' },
+  'segunda-division': { name: 'Segunda División', country: 'Spain', flag: '🇪🇸', logo: '⚽' },
+  'championship': { name: 'Championship', country: 'Scotland', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', logo: '⚽' },
 } as const;
 
 export type LeagueId = keyof typeof LEAGUES;
+
+// Betting odds schema
+export const bettingOddsSchema = z.object({
+  bookmaker: z.string(),
+  win: z.number(),
+  draw: z.number(),
+  loss: z.number(),
+  firstGoalscorer: z.number().optional(),
+  anytimeGoalscorer: z.number().optional(),
+});
+
+// Next fixture schema
+export const nextFixtureSchema = z.object({
+  opponent: z.string(),
+  date: z.string(), // ISO format
+  venue: z.string(),
+  odds: bettingOddsSchema,
+});
 
 // Team schema
 export const teamSchema = z.object({
@@ -27,6 +55,7 @@ export const teamSchema = z.object({
     result: z.enum(['W', 'D', 'L']) as z.ZodType<MatchResult>,
     opponent: z.string(),
   })).length(6),
+  nextFixture: nextFixtureSchema,
 });
 
 // Streak pattern definitions
@@ -63,7 +92,28 @@ export const STREAK_PATTERNS = {
 } as const;
 
 export type StreakPattern = keyof typeof STREAK_PATTERNS;
-export type StreakType = 'winning' | 'drawing';
+export type StreakType = 'winning' | 'drawing' | 'goalscorers';
+
+// Player position type
+export type PlayerPosition = 'DEF' | 'MID' | 'FWD';
+
+// Player schema for goalscorer streaks
+export const playerSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  clubName: z.string(),
+  clubLogo: z.string(), // URL or icon
+  leagueId: z.string() as z.ZodType<LeagueId>,
+  position: z.enum(['DEF', 'MID', 'FWD']) as z.ZodType<PlayerPosition>,
+  photoUrl: z.string(),
+  consecutiveGoals: z.array(z.object({
+    date: z.string(),
+    opponent: z.string(),
+    goals: z.number(),
+  })),
+  totalGoals: z.number(),
+  nextFixture: nextFixtureSchema,
+});
 
 // Team with detected streak
 export const teamWithStreakSchema = teamSchema.extend({
@@ -72,5 +122,15 @@ export const teamWithStreakSchema = teamSchema.extend({
   streakDescription: z.string(),
 });
 
+// Player with goalscorer streak
+export const playerWithStreakSchema = playerSchema.extend({
+  streakDescription: z.string(),
+  streakLength: z.number(),
+});
+
 export type Team = z.infer<typeof teamSchema>;
 export type TeamWithStreak = z.infer<typeof teamWithStreakSchema>;
+export type Player = z.infer<typeof playerSchema>;
+export type PlayerWithStreak = z.infer<typeof playerWithStreakSchema>;
+export type BettingOdds = z.infer<typeof bettingOddsSchema>;
+export type NextFixture = z.infer<typeof nextFixtureSchema>;
