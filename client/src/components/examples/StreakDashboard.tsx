@@ -1,5 +1,5 @@
 import StreakDashboard from '../StreakDashboard';
-import { type TeamWithStreak } from '@shared/schema';
+import { type TeamWithStreak, type PlayerWithStreak } from '@shared/schema';
 
 export default function StreakDashboardExample() {
   // todo: remove mock functionality
@@ -168,11 +168,107 @@ export default function StreakDashboardExample() {
     },
   ];
 
+  // todo: remove mock functionality
+  const mockPlayers: PlayerWithStreak[] = [
+    {
+      id: 'erling-haaland',
+      name: 'Erling Haaland',
+      clubName: 'Manchester City',
+      clubLogo: '⚽',
+      leagueId: 'premier-league',
+      position: 'FWD',
+      photoUrl: 'https://example.com/haaland.jpg',
+      consecutiveGoals: [
+        { date: '2024-01-15', opponent: 'Chelsea', goals: 2 },
+        { date: '2024-01-10', opponent: 'Arsenal', goals: 1 },
+        { date: '2024-01-05', opponent: 'Liverpool', goals: 1 },
+        { date: '2024-01-01', opponent: 'Tottenham', goals: 2 },
+      ],
+      totalGoals: 6,
+      nextFixture: {
+        opponent: 'Wolves',
+        date: '2024-01-22T15:00:00Z',
+        venue: 'Etihad Stadium',
+        odds: {
+          bookmaker: 'Bet365',
+          win: 1.35,
+          draw: 5.20,
+          loss: 8.50,
+          firstGoalscorer: 4.50,
+          anytimeGoalscorer: 1.85,
+        },
+      },
+      streakDescription: 'Scored in 4 consecutive matches (6 goals)',
+      streakLength: 4,
+    },
+    {
+      id: 'kylian-mbappe',
+      name: 'Kylian Mbappé',
+      clubName: 'Real Madrid',
+      clubLogo: '⚽',
+      leagueId: 'la-liga',
+      position: 'FWD',
+      photoUrl: 'https://example.com/mbappe.jpg',
+      consecutiveGoals: [
+        { date: '2024-01-15', opponent: 'Barcelona', goals: 1 },
+        { date: '2024-01-10', opponent: 'Atletico', goals: 2 },
+        { date: '2024-01-05', opponent: 'Sevilla', goals: 1 },
+      ],
+      totalGoals: 4,
+      nextFixture: {
+        opponent: 'Athletic Bilbao',
+        date: '2024-01-21T21:00:00Z',
+        venue: 'Santiago Bernabéu',
+        odds: {
+          bookmaker: 'Betfair',
+          win: 1.45,
+          draw: 4.80,
+          loss: 6.25,
+          firstGoalscorer: 3.75,
+          anytimeGoalscorer: 1.65,
+        },
+      },
+      streakDescription: 'Scored in 3 consecutive matches (4 goals)',
+      streakLength: 3,
+    },
+    {
+      id: 'victor-osimhen',
+      name: 'Victor Osimhen',
+      clubName: 'Napoli',
+      clubLogo: '⚽',
+      leagueId: 'serie-a',
+      position: 'FWD',
+      photoUrl: 'https://example.com/osimhen.jpg',
+      consecutiveGoals: [
+        { date: '2024-01-15', opponent: 'Juventus', goals: 1 },
+        { date: '2024-01-10', opponent: 'Inter', goals: 1 },
+        { date: '2024-01-05', opponent: 'Milan', goals: 2 },
+      ],
+      totalGoals: 4,
+      nextFixture: {
+        opponent: 'Bologna',
+        date: '2024-01-20T20:45:00Z',
+        venue: 'Diego Armando Maradona Stadium',
+        odds: {
+          bookmaker: 'Sisal',
+          win: 2.10,
+          draw: 3.40,
+          loss: 3.70,
+          firstGoalscorer: 5.25,
+          anytimeGoalscorer: 2.10,
+        },
+      },
+      streakDescription: 'Scored in 3 consecutive matches (4 goals)',
+      streakLength: 3,
+    },
+  ];
+
   const lastUpdated = new Date();
 
   return (
     <StreakDashboard 
       teams={mockTeams}
+      players={mockPlayers}
       lastUpdated={lastUpdated}
       isLoading={false}
     />

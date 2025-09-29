@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Trophy, Minus } from "lucide-react";
+import { Trophy, Minus, Target } from "lucide-react";
 import { type StreakType } from "@shared/schema";
 
 interface StreakTabsProps {
@@ -8,6 +8,7 @@ interface StreakTabsProps {
   onTabChange: (tab: StreakType) => void;
   winningCount: number;
   drawingCount: number;
+  goalscorersCount: number;
   children: React.ReactNode;
   className?: string;
 }
@@ -17,6 +18,7 @@ export default function StreakTabs({
   onTabChange, 
   winningCount, 
   drawingCount, 
+  goalscorersCount, 
   children, 
   className 
 }: StreakTabsProps) {
@@ -33,7 +35,7 @@ export default function StreakTabs({
       className={className}
       data-testid="tabs-streak-types"
     >
-      <TabsList className="grid w-full grid-cols-2">
+      <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger 
           value="winning" 
           className="flex items-center gap-2 data-[state=active]:bg-[#40af0f] data-[state=active]:text-white"
@@ -57,6 +59,18 @@ export default function StreakTabs({
             {drawingCount}
           </Badge>
         </TabsTrigger>
+        
+        <TabsTrigger 
+          value="goalscorers" 
+          className="flex items-center gap-2 data-[state=active]:bg-[#c400ff] data-[state=active]:text-white"
+          data-testid="tab-goalscorers-streaks"
+        >
+          <Target className="h-4 w-4" />
+          <span>Goalscorers</span>
+          <Badge variant="secondary" className="ml-1">
+            {goalscorersCount}
+          </Badge>
+        </TabsTrigger>
       </TabsList>
       
       <TabsContent value="winning" className="mt-6">
@@ -64,6 +78,10 @@ export default function StreakTabs({
       </TabsContent>
       
       <TabsContent value="drawing" className="mt-6">
+        {children}
+      </TabsContent>
+      
+      <TabsContent value="goalscorers" className="mt-6">
         {children}
       </TabsContent>
     </Tabs>
