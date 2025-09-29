@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import StreakBadge from "./StreakBadge";
 import { type TeamWithStreak, LEAGUES } from "@shared/schema";
 import { Clock, ExternalLink, TrendingUp } from "lucide-react";
+import { format, parseISO } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
 
 interface TeamCardProps {
   team: TeamWithStreak;
@@ -12,6 +14,24 @@ interface TeamCardProps {
 
 export default function TeamCard({ team, className }: TeamCardProps) {
   const league = LEAGUES[team.leagueId];
+  
+  // Format date and time for CET/CEST (Madrid timezone)
+  const formatFixtureDateTime = (isoDateString: string) => {
+    try {
+      const date = parseISO(isoDateString);
+      const madridTime = toZonedTime(date, 'Europe/Madrid');
+      const formattedDate = format(madridTime, 'dd/MM/yyyy');
+      const formattedTime = format(madridTime, 'HH:mm');
+      return { date: formattedDate, time: formattedTime };
+    } catch {
+      return { date: 'TBD', time: 'TBD' };
+    }
+  };
+  
+  // Format betting odds to 2 decimal places
+  const formatOdds = (odds: number) => odds.toFixed(2);
+  
+  const { date: fixtureDate, time: fixtureTime } = formatFixtureDateTime(team.nextFixture.date);
   
   return (
     <Card className={`hover-elevate ${className}`} data-testid={`card-team-${team.id}`}>
@@ -40,14 +60,15 @@ export default function TeamCard({ team, className }: TeamCardProps) {
               variant="outline" 
               size="sm"
               className="text-xs h-7"
-              data-testid={`button-league-table-${team.id}`}
+              data-testid={`button-standings-${team.id}`}
               onClick={() => {
-                // todo: remove mock functionality - implement real league table link
-                window.open(`/league-table/${team.leagueId}?highlight=${team.id}`, '_blank');
+                // todo: remove mock functionality - implement real standings link
+                window.open(`/standings/${team.leagueId}?highlight=${team.id}`, '_blank');
               }}
             >
+              <span className="mr-1">{league.logo}</span>
               <ExternalLink className="h-3 w-3 mr-1" />
-              League Table
+              Standings
             </Button>
           </div>
           
@@ -76,27 +97,34 @@ export default function TeamCard({ team, className }: TeamCardProps) {
           </div>
           <div className="space-y-2">
             <div className="text-sm" data-testid={`text-next-fixture-${team.id}`}>
-              <span className="font-medium">vs {team.recentMatches[0]?.opponent || 'TBD'}</span>
-              <span className="text-muted-foreground ml-2">
-                {/* todo: remove mock functionality */}
-                Tomorrow 15:00
-              </span>
+              <div className="font-medium">
+                vs {team.nextFixture.opponent}
+              </div>
+              <div className="text-muted-foreground text-xs">
+                {fixtureDate} at {fixtureTime} CET
+              </div>
+              <div className="text-muted-foreground text-xs">
+                Venue: {team.nextFixture.venue}
+              </div>
             </div>
             
             {/* Betting Odds */}
-            <div className="flex items-center gap-2">
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
-              <span className="text-xs text-muted-foreground">Odds:</span>
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                <span className="text-xs text-muted-foreground">
+                  Odds ({team.nextFixture.odds.bookmaker}):
+                </span>
+              </div>
               <div className="flex gap-2 text-xs" data-testid={`betting-odds-${team.id}`}>
                 <Badge variant="secondary" className="px-2 py-1">
-                  {/* todo: remove mock functionality - implement real betting odds API */}
-                  Win 2.1
+                  Win {formatOdds(team.nextFixture.odds.win)}
                 </Badge>
                 <Badge variant="secondary" className="px-2 py-1">
-                  Draw 3.4
+                  Draw {formatOdds(team.nextFixture.odds.draw)}
                 </Badge>
                 <Badge variant="secondary" className="px-2 py-1">
-                  Loss 3.8
+                  Loss {formatOdds(team.nextFixture.odds.loss)}
                 </Badge>
               </div>
             </div>
