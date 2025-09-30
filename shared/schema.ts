@@ -138,6 +138,7 @@ export const bettingOddsSchema = z.object({
   doubleChanceX2: z.number().optional(), // Draw or away win
   firstGoalscorer: z.number().optional(),
   anytimeGoalscorer: z.number().optional(),
+  twoOrMoreGoals: z.number().optional(), // Player to score 2 or more goals
 });
 
 // Next fixture schema
@@ -158,6 +159,7 @@ export const teamSchema = z.object({
     result: z.enum(['W', 'D', 'L']) as z.ZodType<MatchResult>,
     opponent: z.string(),
     score: z.string().optional(), // e.g., "2-1", "1-1", "0-2"
+    isHome: z.boolean(), // Whether the team played at home
   })).length(6),
   nextFixture: nextFixtureSchema,
 });
@@ -214,6 +216,7 @@ export const playerSchema = z.object({
     date: z.string(),
     opponent: z.string(),
     goals: z.number(),
+    isHome: z.boolean(), // Whether the player's team played at home
   })),
   totalGoals: z.number(),
   nextFixture: nextFixtureSchema,
