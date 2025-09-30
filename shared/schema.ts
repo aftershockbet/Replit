@@ -221,6 +221,10 @@ export const playerSchema = z.object({
   })),
   totalGoals: z.number(),
   nextFixture: nextFixtureSchema,
+  favoriteVictim: z.object({
+    teamName: z.string(),
+    goalsScored: z.number(), // Total goals scored against this team historically
+  }).optional(),
 });
 
 // Team with detected streak
