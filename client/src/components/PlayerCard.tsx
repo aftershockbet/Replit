@@ -64,22 +64,17 @@ export default function PlayerCard({ player, className }: PlayerCardProps) {
               <span className="mr-1">{league.flag}</span>
               {league.name}
             </Badge>
-            <Link href={`/top-scorers/${player.leagueId}`}>
+            {player.favoriteVictim && (
               <Button 
                 variant="outline" 
                 size="sm"
                 className="text-xs h-7"
-                data-testid={`button-topscorers-${player.id}`}
+                data-testid={`button-favorite-victim-${player.id}`}
               >
-                {league.logo.startsWith('/') ? (
-                  <img src={league.logo} alt={league.name} className="h-4 w-4 mr-1 object-contain" />
-                ) : (
-                  <span className="mr-1">{league.logo}</span>
-                )}
-                <ExternalLink className="h-3 w-3 mr-1" />
-                Top Scorers
+                <Target className="h-3 w-3 mr-1 text-amber-500" />
+                Favorite Victim: {player.favoriteVictim.teamName} ({player.favoriteVictim.goalsScored})
               </Button>
-            </Link>
+            )}
           </div>
         </div>
       </CardHeader>
