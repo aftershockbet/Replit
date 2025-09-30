@@ -65,6 +65,8 @@ export default function TeamCard({ team, className }: TeamCardProps) {
                 opponent={match.opponent}
                 date={match.date}
                 score={match.score}
+                teamName={team.name}
+                isHome={match.isHome}
                 className="transition-transform hover:scale-110"
               />
             ))}
