@@ -2,24 +2,34 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { type TeamWithStreak, type PlayerWithStreak, LEAGUES } from "@shared/schema";
-import { TrendingUp, X, Trophy, Target } from "lucide-react";
+import { TrendingUp, X, Trophy, Target, Crosshair } from "lucide-react";
+
+interface FavoriteVictimAlert {
+  player: PlayerWithStreak;
+  favoriteVictimTeam: string;
+  goalsScored: number;
+}
 
 interface StreakAlertsProps {
   newTeams: TeamWithStreak[];
   newPlayers: PlayerWithStreak[];
+  favoriteVictimMatches?: FavoriteVictimAlert[];
   onDismissTeam: (teamId: string) => void;
   onDismissPlayer: (playerId: string) => void;
+  onDismissFavoriteVictim?: (playerId: string) => void;
   className?: string;
 }
 
 export default function StreakAlerts({
   newTeams,
   newPlayers,
+  favoriteVictimMatches = [],
   onDismissTeam,
   onDismissPlayer,
+  onDismissFavoriteVictim,
   className
 }: StreakAlertsProps) {
-  if (newTeams.length === 0 && newPlayers.length === 0) {
+  if (newTeams.length === 0 && newPlayers.length === 0 && favoriteVictimMatches.length === 0) {
     return null;
   }
 
@@ -109,6 +119,42 @@ export default function StreakAlerts({
               >
                 <X className="h-4 w-4" />
               </Button>
+            </div>
+          </Alert>
+        );
+      })}
+
+      {/* Favorite Victim Alerts */}
+      {favoriteVictimMatches.map((alert) => {
+        const league = LEAGUES[alert.player.leagueId];
+        return (
+          <Alert 
+            key={alert.player.id} 
+            className="border-amber-500 bg-amber-500/10"
+            data-testid={`alert-favorite-victim-${alert.player.id}`}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-2">
+                  <Crosshair className="h-5 w-5 text-amber-500" />
+                  <AlertTitle className="mb-0">Favorite Victim Alert!</AlertTitle>
+                </div>
+                <AlertDescription>
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-semibold">{alert.player.name}</span>
+                      <span className="text-muted-foreground text-sm">({alert.player.clubName})</span>
+                      <Badge variant="outline" className="text-xs">
+                        <span className="mr-1">{league.flag}</span>
+                        {league.name}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      Playing against <span className="font-semibold text-foreground">{alert.favoriteVictimTeam}</span> - {alert.goalsScored} goals scored historically!
+                    </p>
+                  </div>
+                </AlertDescription>
+              </div>
             </div>
           </Alert>
         );

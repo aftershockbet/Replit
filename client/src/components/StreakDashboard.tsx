@@ -30,11 +30,11 @@ export default function StreakDashboard({
   const [activeTab, setActiveTab] = useState<StreakType>('winning');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLeagues, setSelectedLeagues] = useState<LeagueId[]>([]);
+  const [displayedNewTeams, setDisplayedNewTeams] = useState<TeamWithStreak[]>([]);
+  const [displayedNewPlayers, setDisplayedNewPlayers] = useState<PlayerWithStreak[]>([]);
   
   // Alert system for new teams/players
   const alerts = useStreakAlerts(teams, players);
-  const [displayedNewTeams, setDisplayedNewTeams] = useState<TeamWithStreak[]>([]);
-  const [displayedNewPlayers, setDisplayedNewPlayers] = useState<PlayerWithStreak[]>([]);
   
   // Update displayed alerts when new ones arrive
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function StreakDashboard({
     if (alerts.newPlayers.length > 0) {
       setDisplayedNewPlayers(alerts.newPlayers);
     }
-  }, [alerts]);
+  }, [alerts.newTeams, alerts.newPlayers]);
   
   const handleDismissTeamAlert = (teamId: string) => {
     setDisplayedNewTeams(prev => dismissTeamAlert(teamId, prev));
@@ -197,6 +197,7 @@ export default function StreakDashboard({
         <StreakAlerts
           newTeams={displayedNewTeams}
           newPlayers={displayedNewPlayers}
+          favoriteVictimMatches={alerts.favoriteVictimMatches}
           onDismissTeam={handleDismissTeamAlert}
           onDismissPlayer={handleDismissPlayerAlert}
           className="mb-6"

@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import { type TeamWithStreak, type PlayerWithStreak } from "@shared/schema";
 
+interface FavoriteVictimAlert {
+  player: PlayerWithStreak;
+  favoriteVictimTeam: string;
+  goalsScored: number;
+}
+
 interface StreakAlerts {
   newTeams: TeamWithStreak[];
   newPlayers: PlayerWithStreak[];
+  favoriteVictimMatches: FavoriteVictimAlert[];
 }
 
 const STORAGE_KEY_TEAMS = 'elite-streaks-seen-teams';
@@ -15,6 +22,7 @@ export function useStreakAlerts(
 ): StreakAlerts {
   const [newTeams, setNewTeams] = useState<TeamWithStreak[]>([]);
   const [newPlayers, setNewPlayers] = useState<PlayerWithStreak[]>([]);
+  const [favoriteVictimMatches, setFavoriteVictimMatches] = useState<FavoriteVictimAlert[]>([]);
 
   useEffect(() => {
     // Get previously seen team IDs from localStorage
@@ -52,7 +60,23 @@ export function useStreakAlerts(
     }
   }, [players]);
 
-  return { newTeams, newPlayers };
+  useEffect(() => {
+    // Check for players facing their favorite victims in next fixture
+    const victimAlerts: FavoriteVictimAlert[] = players
+      .filter(player => 
+        player.favoriteVictim && 
+        player.nextFixture.opponent === player.favoriteVictim.teamName
+      )
+      .map(player => ({
+        player,
+        favoriteVictimTeam: player.favoriteVictim!.teamName,
+        goalsScored: player.favoriteVictim!.goalsScored,
+      }));
+    
+    setFavoriteVictimMatches(victimAlerts);
+  }, [players]);
+
+  return { newTeams, newPlayers, favoriteVictimMatches };
 }
 
 export function dismissTeamAlert(teamId: string, newTeams: TeamWithStreak[]): TeamWithStreak[] {
@@ -61,4 +85,8 @@ export function dismissTeamAlert(teamId: string, newTeams: TeamWithStreak[]): Te
 
 export function dismissPlayerAlert(playerId: string, newPlayers: PlayerWithStreak[]): PlayerWithStreak[] {
   return newPlayers.filter(player => player.id !== playerId);
+}
+
+export function dismissFavoriteVictimAlert(playerId: string, favoriteVictimMatches: FavoriteVictimAlert[]): FavoriteVictimAlert[] {
+  return favoriteVictimMatches.filter(alert => alert.player.id !== playerId);
 }
