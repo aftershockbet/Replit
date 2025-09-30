@@ -82,13 +82,13 @@ export default function TeamCard({ team, className }: TeamCardProps) {
           <div className="space-y-2">
             <div className="text-sm" data-testid={`text-next-fixture-${team.id}`}>
               <div className="font-medium">
-                vs {team.nextFixture.opponent}
+                {team.nextFixture.isHome 
+                  ? `${team.name} vs ${team.nextFixture.opponent}`
+                  : `${team.nextFixture.opponent} vs ${team.name}`
+                }
               </div>
               <div className="text-muted-foreground text-xs">
                 {fixtureDate} at {fixtureTime} CET
-              </div>
-              <div className="text-muted-foreground text-xs">
-                Venue: {team.nextFixture.venue}
               </div>
             </div>
             
@@ -116,17 +116,17 @@ export default function TeamCard({ team, className }: TeamCardProps) {
               {(team.nextFixture.odds.doubleChance1X || team.nextFixture.odds.doubleChance12 || team.nextFixture.odds.doubleChanceX2) && (
                 <div className="flex flex-wrap gap-2 text-xs mt-2" data-testid={`double-chance-odds-${team.id}`}>
                   {team.nextFixture.odds.doubleChance1X && (
-                    <Badge variant="outline" className="px-2 py-1 text-xs">
+                    <Badge variant="secondary" className="px-2 py-1 text-xs">
                       1X {formatOdds(team.nextFixture.odds.doubleChance1X)}
                     </Badge>
                   )}
                   {team.nextFixture.odds.doubleChance12 && (
-                    <Badge variant="outline" className="px-2 py-1 text-xs">
+                    <Badge variant="secondary" className="px-2 py-1 text-xs">
                       12 {formatOdds(team.nextFixture.odds.doubleChance12)}
                     </Badge>
                   )}
                   {team.nextFixture.odds.doubleChanceX2 && (
-                    <Badge variant="outline" className="px-2 py-1 text-xs">
+                    <Badge variant="secondary" className="px-2 py-1 text-xs">
                       X2 {formatOdds(team.nextFixture.odds.doubleChanceX2)}
                     </Badge>
                   )}

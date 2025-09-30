@@ -127,13 +127,13 @@ export default function PlayerCard({ player, className }: PlayerCardProps) {
           <div className="space-y-2">
             <div className="text-sm" data-testid={`text-next-fixture-${player.id}`}>
               <div className="font-medium">
-                vs {player.nextFixture.opponent}
+                {player.nextFixture.isHome 
+                  ? `${player.clubName} vs ${player.nextFixture.opponent}`
+                  : `${player.nextFixture.opponent} vs ${player.clubName}`
+                }
               </div>
               <div className="text-muted-foreground text-xs">
                 {fixtureDate} at {fixtureTime} CET
-              </div>
-              <div className="text-muted-foreground text-xs">
-                Venue: {player.nextFixture.venue}
               </div>
             </div>
             

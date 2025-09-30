@@ -20,6 +20,7 @@ export default function StreakDashboardExample() {
         opponent: 'Wolves',
         date: '2024-01-22T15:00:00Z',
         venue: 'Etihad Stadium',
+        isHome: true,
         odds: {
           bookmaker: 'Bet365',
           win: 1.35,
@@ -50,6 +51,7 @@ export default function StreakDashboardExample() {
         opponent: 'Burnley',
         date: '2024-01-23T20:00:00Z',
         venue: 'Emirates Stadium',
+        isHome: true,
         odds: {
           bookmaker: 'William Hill',
           win: 1.22,
@@ -80,6 +82,7 @@ export default function StreakDashboardExample() {
         opponent: 'Athletic Bilbao',
         date: '2024-01-21T21:00:00Z',
         venue: 'Santiago Bernabéu',
+        isHome: true,
         odds: {
           bookmaker: 'Betfair',
           win: 1.45,
@@ -110,6 +113,7 @@ export default function StreakDashboardExample() {
         opponent: 'Bologna',
         date: '2024-01-20T20:45:00Z',
         venue: 'Diego Armando Maradona Stadium',
+        isHome: true,
         odds: {
           bookmaker: 'Sisal',
           win: 2.10,
@@ -140,6 +144,7 @@ export default function StreakDashboardExample() {
         opponent: 'Augsburg',
         date: '2024-01-22T18:30:00Z',
         venue: 'Allianz Arena',
+        isHome: true,
         odds: {
           bookmaker: 'Tipico',
           win: 1.18,
@@ -170,6 +175,7 @@ export default function StreakDashboardExample() {
         opponent: 'Brest',
         date: '2024-01-21T17:00:00Z',
         venue: 'Parc des Princes',
+        isHome: true,
         odds: {
           bookmaker: 'PMU',
           win: 1.28,
@@ -207,6 +213,7 @@ export default function StreakDashboardExample() {
         opponent: 'Wolves',
         date: '2024-01-22T15:00:00Z',
         venue: 'Etihad Stadium',
+        isHome: true,
         odds: {
           bookmaker: 'Bet365',
           win: 1.35,
@@ -238,6 +245,7 @@ export default function StreakDashboardExample() {
         opponent: 'Athletic Bilbao',
         date: '2024-01-21T21:00:00Z',
         venue: 'Santiago Bernabéu',
+        isHome: true,
         odds: {
           bookmaker: 'Betfair',
           win: 1.45,
@@ -269,6 +277,7 @@ export default function StreakDashboardExample() {
         opponent: 'Bologna',
         date: '2024-01-20T20:45:00Z',
         venue: 'Diego Armando Maradona Stadium',
+        isHome: true,
         odds: {
           bookmaker: 'Sisal',
           win: 2.10,

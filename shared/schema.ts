@@ -146,6 +146,7 @@ export const nextFixtureSchema = z.object({
   opponent: z.string(),
   date: z.string(), // ISO format
   venue: z.string(),
+  isHome: z.boolean(), // Whether the team/player's team is hosting
   odds: bettingOddsSchema,
 });
 
