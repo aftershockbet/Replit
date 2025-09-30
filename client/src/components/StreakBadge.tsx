@@ -10,9 +10,11 @@ interface StreakBadgeProps {
   date?: string;
   score?: string;
   className?: string;
+  teamName?: string;
+  isHome?: boolean;
 }
 
-export default function StreakBadge({ result, opponent, date, score, className }: StreakBadgeProps) {
+export default function StreakBadge({ result, opponent, date, score, className, teamName, isHome }: StreakBadgeProps) {
   const getBadgeVariant = (result: MatchResult) => {
     switch (result) {
       case 'W':
@@ -94,7 +96,12 @@ export default function StreakBadge({ result, opponent, date, score, className }
       <TooltipContent>
         <div className="text-sm">
           <div className="font-medium">{getResultText(result, score)}</div>
-          {opponent && <div>vs {opponent}</div>}
+          {opponent && teamName && typeof isHome !== 'undefined' && (
+            <div>
+              {isHome ? `${teamName} vs ${opponent}` : `${opponent} vs ${teamName}`}
+            </div>
+          )}
+          {opponent && !teamName && <div>vs {opponent}</div>}
           {date && <div className="text-muted-foreground">{formatDate(date)}</div>}
         </div>
       </TooltipContent>
