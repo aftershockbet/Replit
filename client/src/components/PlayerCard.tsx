@@ -71,7 +71,11 @@ export default function PlayerCard({ player, className }: PlayerCardProps) {
                 className="text-xs h-7"
                 data-testid={`button-topscorers-${player.id}`}
               >
-                <span className="mr-1">{league.logo}</span>
+                {league.logo.startsWith('/') ? (
+                  <img src={league.logo} alt={league.name} className="h-4 w-4 mr-1 object-contain" />
+                ) : (
+                  <span className="mr-1">{league.logo}</span>
+                )}
                 <ExternalLink className="h-3 w-3 mr-1" />
                 Top Scorers
               </Button>

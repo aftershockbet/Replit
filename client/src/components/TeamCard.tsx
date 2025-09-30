@@ -46,7 +46,11 @@ export default function TeamCard({ team, className }: TeamCardProps) {
                 className="text-xs h-7"
                 data-testid={`button-standings-${team.id}`}
               >
-                <span className="mr-1">{league.logo}</span>
+                {league.logo.startsWith('/') ? (
+                  <img src={league.logo} alt={league.name} className="h-4 w-4 mr-1 object-contain" />
+                ) : (
+                  <span className="mr-1">{league.logo}</span>
+                )}
                 <ExternalLink className="h-3 w-3 mr-1" />
                 Standings
               </Button>
