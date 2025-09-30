@@ -226,6 +226,10 @@ export default function StreakDashboardExample() {
       },
       streakDescription: 'Scored in 4 consecutive matches (6 goals)',
       streakLength: 4,
+      favoriteVictim: {
+        teamName: 'Wolves',
+        goalsScored: 8,
+      },
     },
     {
       id: 'kylian-mbappe',
@@ -258,6 +262,10 @@ export default function StreakDashboardExample() {
       },
       streakDescription: 'Scored in 3 consecutive matches (4 goals)',
       streakLength: 3,
+      favoriteVictim: {
+        teamName: 'Barcelona',
+        goalsScored: 6,
+      },
     },
     {
       id: 'victor-osimhen',
@@ -290,6 +298,10 @@ export default function StreakDashboardExample() {
       },
       streakDescription: 'Scored in 3 consecutive matches (4 goals)',
       streakLength: 3,
+      favoriteVictim: {
+        teamName: 'Milan',
+        goalsScored: 5,
+      },
     },
   ];
 
