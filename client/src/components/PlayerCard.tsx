@@ -138,7 +138,7 @@ export default function PlayerCard({ player, className }: PlayerCardProps) {
             </div>
             
             {/* Goalscorer Betting Odds */}
-            {(player.nextFixture.odds.firstGoalscorer || player.nextFixture.odds.anytimeGoalscorer) && (
+            {(player.nextFixture.odds.firstGoalscorer || player.nextFixture.odds.anytimeGoalscorer || player.nextFixture.odds.twoOrMoreGoals) && (
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <TrendingUp className="h-4 w-4 text-muted-foreground" />
@@ -146,15 +146,20 @@ export default function PlayerCard({ player, className }: PlayerCardProps) {
                     Goalscorer Odds ({player.nextFixture.odds.bookmaker}):
                   </span>
                 </div>
-                <div className="flex gap-2 text-xs" data-testid={`goalscorer-odds-${player.id}`}>
+                <div className="flex flex-wrap gap-2 text-xs" data-testid={`goalscorer-odds-${player.id}`}>
                   {player.nextFixture.odds.firstGoalscorer && (
-                    <Badge variant="secondary" className="px-2 py-1">
+                    <Badge variant="secondary" className="px-2 py-1 text-xs">
                       1st Goal {formatOdds(player.nextFixture.odds.firstGoalscorer)}
                     </Badge>
                   )}
                   {player.nextFixture.odds.anytimeGoalscorer && (
-                    <Badge variant="secondary" className="px-2 py-1">
+                    <Badge variant="secondary" className="px-2 py-1 text-xs">
                       Anytime {formatOdds(player.nextFixture.odds.anytimeGoalscorer)}
+                    </Badge>
+                  )}
+                  {player.nextFixture.odds.twoOrMoreGoals && (
+                    <Badge variant="secondary" className="px-2 py-1 text-xs">
+                      2+ Goals {formatOdds(player.nextFixture.odds.twoOrMoreGoals)}
                     </Badge>
                   )}
                 </div>
