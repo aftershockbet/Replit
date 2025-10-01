@@ -67,7 +67,11 @@ export default function LeagueFilter({
                 onCheckedChange={() => handleLeagueToggle(leagueId as LeagueId)}
                 data-testid={`checkbox-league-${leagueId}`}
               >
-                <span className="mr-2">{league.flag}</span>
+                {league.logo && league.logo.includes('/') ? (
+                  <img src={league.logo} alt={league.name} className="h-4 w-4 mr-2 object-contain" />
+                ) : (
+                  <span className="mr-2">{league.flag}</span>
+                )}
                 {league.name}
               </DropdownMenuCheckboxItem>
             ))}
@@ -86,7 +90,11 @@ export default function LeagueFilter({
                 className="flex items-center gap-1"
                 data-testid={`badge-selected-league-${leagueId}`}
               >
-                <span>{league.flag}</span>
+                {league.logo && league.logo.includes('/') ? (
+                  <img src={league.logo} alt={league.name} className="h-4 w-4 object-contain" />
+                ) : (
+                  <span>{league.flag}</span>
+                )}
                 <span>{league.name}</span>
                 <Button
                   variant="ghost"

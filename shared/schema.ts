@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { LEAGUE_LOGO_MAP } from "./league-logos";
 
 // Match result type
 export type MatchResult = 'W' | 'D' | 'L';
@@ -17,11 +18,11 @@ export const LEAGUES = {
   'serie-b-bra': { name: 'Série B', country: 'Brazil', flag: '🇧🇷', logo: '/src/assets/leagues/serie-b-bra.png' },
   
   // Bulgaria
-  'first-league-bgr': { name: 'First League', country: 'Bulgaria', flag: '🇧🇬', logo: '🇧🇬' },
+  'first-league-bgr': { name: 'First League', country: 'Bulgaria', flag: '🇧🇬', logo: LEAGUE_LOGO_MAP['first-league-bgr'] },
   
   // Chile
-  'primera-division-chl': { name: 'Primera División', country: 'Chile', flag: '🇨🇱', logo: '🇨🇱' },
-  'primera-b-chl': { name: 'Primera B', country: 'Chile', flag: '🇨🇱', logo: '🇨🇱' },
+  'primera-division-chl': { name: 'Primera División', country: 'Chile', flag: '🇨🇱', logo: LEAGUE_LOGO_MAP['primera-division-chl'] },
+  'primera-b-chl': { name: 'Primera B', country: 'Chile', flag: '🇨🇱', logo: LEAGUE_LOGO_MAP['primera-b-chl'] },
   
   // China
   'super-league-chn': { name: 'Super League', country: 'China', flag: '🇨🇳', logo: '🇨🇳' },
@@ -66,7 +67,7 @@ export const LEAGUES = {
   'liga-expansion-mx': { name: 'Liga de Expansión MX', country: 'Mexico', flag: '🇲🇽', logo: '🇲🇽' },
   
   // Morocco
-  'botola': { name: 'Botola', country: 'Morocco', flag: '🇲🇦', logo: '🇲🇦' },
+  'botola': { name: 'Botola', country: 'Morocco', flag: '🇲🇦', logo: LEAGUE_LOGO_MAP['botola'] },
   
   // Netherlands
   'eredivisie': { name: 'Eredivisie', country: 'Netherlands', flag: '🇳🇱', logo: '/src/assets/leagues/eredivisie.png' },
@@ -80,29 +81,29 @@ export const LEAGUES = {
   'obos-ligaen': { name: 'OBOS-ligaen', country: 'Norway', flag: '🇳🇴', logo: '🇳🇴' },
   
   // Peru
-  'liga-1-per': { name: 'Liga 1', country: 'Peru', flag: '🇵🇪', logo: '🇵🇪' },
+  'liga-1-per': { name: 'Liga 1', country: 'Peru', flag: '🇵🇪', logo: LEAGUE_LOGO_MAP['liga-1-per'] },
   
   // Poland
-  'ekstraklasa': { name: 'Ekstraklasa', country: 'Poland', flag: '🇵🇱', logo: '🇵🇱' },
+  'ekstraklasa': { name: 'Ekstraklasa', country: 'Poland', flag: '🇵🇱', logo: LEAGUE_LOGO_MAP['ekstraklasa'] },
   
   // Portugal
   'liga-portugal': { name: 'Liga Portugal', country: 'Portugal', flag: '🇵🇹', logo: '/src/assets/leagues/liga-portugal.png' },
   
   // Romania
-  'liga-1-rou': { name: 'Liga I', country: 'Romania', flag: '🇷🇴', logo: '🇷🇴' },
+  'liga-1-rou': { name: 'Liga I', country: 'Romania', flag: '🇷🇴', logo: LEAGUE_LOGO_MAP['liga-1-rou'] },
   
   // Scotland
   'premiership-sct': { name: 'Premiership', country: 'Scotland', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', logo: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' },
   'championship': { name: 'Championship', country: 'Scotland', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', logo: '/src/assets/leagues/championship.png' },
   
   // Serbia
-  'superliga-srb': { name: 'SuperLiga', country: 'Serbia', flag: '🇷🇸', logo: '🇷🇸' },
+  'superliga-srb': { name: 'SuperLiga', country: 'Serbia', flag: '🇷🇸', logo: LEAGUE_LOGO_MAP['superliga-srb'] },
   
   // Slovakia
-  'fortuna-liga': { name: 'Fortuna Liga', country: 'Slovakia', flag: '🇸🇰', logo: '🇸🇰' },
+  'fortuna-liga': { name: 'Fortuna Liga', country: 'Slovakia', flag: '🇸🇰', logo: LEAGUE_LOGO_MAP['fortuna-liga'] },
   
   // Slovenia
-  'prva-liga': { name: 'PrvaLiga', country: 'Slovenia', flag: '🇸🇮', logo: '🇸🇮' },
+  'prva-liga': { name: 'PrvaLiga', country: 'Slovenia', flag: '🇸🇮', logo: LEAGUE_LOGO_MAP['prva-liga'] },
   
   // South Korea
   'k-league-1': { name: 'K League 1', country: 'South Korea', flag: '🇰🇷', logo: '🇰🇷' },
@@ -117,12 +118,12 @@ export const LEAGUES = {
   'superettan': { name: 'Superettan', country: 'Sweden', flag: '🇸🇪', logo: '🇸🇪' },
   
   // Switzerland
-  'super-league-che': { name: 'Super League', country: 'Switzerland', flag: '🇨🇭', logo: '🇨🇭' },
-  'challenge-league': { name: 'Challenge League', country: 'Switzerland', flag: '🇨🇭', logo: '🇨🇭' },
+  'super-league-che': { name: 'Super League', country: 'Switzerland', flag: '🇨🇭', logo: LEAGUE_LOGO_MAP['super-league-che'] },
+  'challenge-league': { name: 'Challenge League', country: 'Switzerland', flag: '🇨🇭', logo: LEAGUE_LOGO_MAP['challenge-league'] },
   
   // Turkey
   'super-lig': { name: 'Süper Lig', country: 'Turkey', flag: '🇹🇷', logo: '/src/assets/leagues/super-lig.png' },
-  'lig-1': { name: '1. Lig', country: 'Turkey', flag: '🇹🇷', logo: '🇹🇷' },
+  'lig-1': { name: '1. Lig', country: 'Turkey', flag: '🇹🇷', logo: LEAGUE_LOGO_MAP['lig-1'] },
 } as const;
 
 export type LeagueId = keyof typeof LEAGUES;
