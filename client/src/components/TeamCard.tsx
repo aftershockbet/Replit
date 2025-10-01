@@ -21,19 +21,17 @@ export default function TeamCard({ team, className }: TeamCardProps) {
   return (
     <Card className={`hover-elevate ${className}`} data-testid={`card-team-${team.id}`}>
       <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-lg font-semibold" data-testid={`text-team-name-${team.id}`}>
-              {team.name}
-            </span>
-          </div>
-          <Badge variant="outline" className="text-xs flex items-center gap-1" data-testid={`badge-league-${team.id}`}>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h3 className="text-base sm:text-lg font-semibold break-words" data-testid={`text-team-name-${team.id}`}>
+            {team.name}
+          </h3>
+          <Badge variant="outline" className="text-xs flex items-center gap-1 w-fit shrink-0" data-testid={`badge-league-${team.id}`}>
             {'logoUrl' in league && league.logoUrl ? (
               <img src={league.logoUrl} alt={league.name} className="h-4 w-4 object-contain" />
             ) : (
               <span>{league.flag}</span>
             )}
-            {league.name}
+            <span className="whitespace-nowrap">{league.name}</span>
           </Badge>
         </div>
       </CardHeader>
@@ -41,7 +39,7 @@ export default function TeamCard({ team, className }: TeamCardProps) {
       <CardContent className="space-y-4">
         {/* Streak Pattern Display */}
         <div className="space-y-2">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-2">
             <span className="text-sm font-medium text-muted-foreground">
               Recent Form
             </span>
@@ -49,7 +47,7 @@ export default function TeamCard({ team, className }: TeamCardProps) {
               <Button 
                 variant="outline" 
                 size="sm"
-                className="text-xs h-7"
+                className="text-xs h-7 shrink-0"
                 data-testid={`button-standings-${team.id}`}
               >
                 {'logoUrl' in league && league.logoUrl ? (
@@ -58,7 +56,8 @@ export default function TeamCard({ team, className }: TeamCardProps) {
                   <span className="mr-1">{league.flag}</span>
                 )}
                 <ExternalLink className="h-3 w-3 mr-1" />
-                Standings
+                <span className="hidden xs:inline">Standings</span>
+                <span className="xs:hidden">Table</span>
               </Button>
             </Link>
           </div>
@@ -87,13 +86,13 @@ export default function TeamCard({ team, className }: TeamCardProps) {
           </div>
           <div className="space-y-2">
             <div className="text-sm" data-testid={`text-next-fixture-${team.id}`}>
-              <div className="font-medium">
+              <div className="font-medium break-words">
                 {team.nextFixture.isHome 
                   ? `${team.name} vs ${team.nextFixture.opponent}`
                   : `${team.nextFixture.opponent} vs ${team.name}`
                 }
               </div>
-              <div className="text-muted-foreground text-xs">
+              <div className="text-muted-foreground text-xs mt-1">
                 {fixtureDate} at {fixtureTime} CET
               </div>
             </div>

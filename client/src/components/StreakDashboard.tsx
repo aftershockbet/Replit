@@ -232,7 +232,7 @@ export default function StreakDashboard({
                   
                   return (
                     <div key={leagueId} className="space-y-4">
-                      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
                         {leaguePlayers.map(player => (
                           <PlayerCard 
                             key={player.id} 
@@ -267,7 +267,7 @@ export default function StreakDashboard({
                   
                   return (
                     <div key={leagueId} className="space-y-4">
-                      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
                         {leagueTeams.map(team => (
                           <TeamCard 
                             key={team.id} 
