@@ -67,8 +67,8 @@ export default function LeagueFilter({
                 onCheckedChange={() => handleLeagueToggle(leagueId as LeagueId)}
                 data-testid={`checkbox-league-${leagueId}`}
               >
-                {league.logo && league.logo.includes('/') ? (
-                  <img src={league.logo} alt={league.name} className="h-4 w-4 mr-2 object-contain" />
+                {'logoUrl' in league && league.logoUrl ? (
+                  <img src={league.logoUrl} alt={league.name} className="h-4 w-4 mr-2 object-contain" />
                 ) : (
                   <span className="mr-2">{league.flag}</span>
                 )}
@@ -90,8 +90,8 @@ export default function LeagueFilter({
                 className="flex items-center gap-1"
                 data-testid={`badge-selected-league-${leagueId}`}
               >
-                {league.logo && league.logo.includes('/') ? (
-                  <img src={league.logo} alt={league.name} className="h-4 w-4 object-contain" />
+                {'logoUrl' in league && league.logoUrl ? (
+                  <img src={league.logoUrl} alt={league.name} className="h-4 w-4 object-contain" />
                 ) : (
                   <span>{league.flag}</span>
                 )}

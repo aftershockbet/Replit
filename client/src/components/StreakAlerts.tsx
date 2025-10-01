@@ -54,8 +54,12 @@ export default function StreakAlerts({
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <span className="font-semibold">{team.name}</span>
-                      <Badge variant="outline" className="text-xs">
-                        <span className="mr-1">{league.flag}</span>
+                      <Badge variant="outline" className="text-xs flex items-center gap-1">
+                        {'logoUrl' in league && league.logoUrl ? (
+                          <img src={league.logoUrl} alt={league.name} className="h-4 w-4 object-contain" />
+                        ) : (
+                          <span>{league.flag}</span>
+                        )}
                         {league.name}
                       </Badge>
                     </div>
@@ -99,8 +103,12 @@ export default function StreakAlerts({
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-semibold">{player.name}</span>
                       <span className="text-muted-foreground text-sm">({player.clubName})</span>
-                      <Badge variant="outline" className="text-xs">
-                        <span className="mr-1">{league.flag}</span>
+                      <Badge variant="outline" className="text-xs flex items-center gap-1">
+                        {'logoUrl' in league && league.logoUrl ? (
+                          <img src={league.logoUrl} alt={league.name} className="h-4 w-4 object-contain" />
+                        ) : (
+                          <span>{league.flag}</span>
+                        )}
                         {league.name}
                       </Badge>
                     </div>
@@ -144,8 +152,12 @@ export default function StreakAlerts({
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-semibold">{alert.player.name}</span>
                       <span className="text-muted-foreground text-sm">({alert.player.clubName})</span>
-                      <Badge variant="outline" className="text-xs">
-                        <span className="mr-1">{league.flag}</span>
+                      <Badge variant="outline" className="text-xs flex items-center gap-1">
+                        {'logoUrl' in league && league.logoUrl ? (
+                          <img src={league.logoUrl} alt={league.name} className="h-4 w-4 object-contain" />
+                        ) : (
+                          <span>{league.flag}</span>
+                        )}
                         {league.name}
                       </Badge>
                     </div>

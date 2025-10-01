@@ -1,5 +1,17 @@
 import { z } from "zod";
-import { LEAGUE_LOGO_MAP } from "./league-logos";
+import bulgariaFirstLeague from "@assets/Efbet_Bulgaria Liga_logo_1759315488379.png";
+import chilePrimeraDiv from "@assets/Chile Primera Liga Itau logo_1759315488379.png";
+import chilePrimeraB from "@assets/Chile Liga Ascenso Caixun logo_1759315488377.png";
+import moroccoBotola from "@assets/Morocco Botola Pro logo_1759315488379.png";
+import peruLiga1 from "@assets/Peru Liga 1 logo_1759315488379.png";
+import polandEkstraklasa from "@assets/Poland Ekstraklasa logo_1759315488379.png";
+import romaniaSuperLiga from "@assets/Romania SuperLiga_logo_1759315488379.png";
+import serbiaSuperLiga from "@assets/Serbia_Mozzart_Bet_SuperLiga_1759315488379.png";
+import slovakiaFortuna from "@assets/Slovakia Nike-liga-logo_1759315488380.png";
+import sloveniaPrvaLiga from "@assets/Slovenian_PrvaLiga_logo_1759315488380.png";
+import switzerlandSuper from "@assets/Switzerland Superleague logo_1759315488380.png";
+import switzerlandChallenge from "@assets/Switzerland Challenge_League_1759315488380.png";
+import turkeyLig1 from "@assets/Turkey 1.Lig_logo_1759315488380.png";
 
 // Match result type
 export type MatchResult = 'W' | 'D' | 'L';
@@ -7,123 +19,123 @@ export type MatchResult = 'W' | 'D' | 'L';
 // League definitions
 export const LEAGUES = {
   // Argentina
-  'primera-division-arg': { name: 'Primera División', country: 'Argentina', flag: '🇦🇷', logo: '/src/assets/leagues/primera-division-arg.png' },
-  'primera-nacional': { name: 'Primera Nacional', country: 'Argentina', flag: '🇦🇷', logo: '🇦🇷' },
+  'primera-division-arg': { name: 'Primera División', country: 'Argentina', flag: '🇦🇷', logoUrl: '/src/assets/leagues/primera-division-arg.png' },
+  'primera-nacional': { name: 'Primera Nacional', country: 'Argentina', flag: '🇦🇷' },
   
   // Belgium
-  'pro-league-b': { name: 'Challenger Pro League', country: 'Belgium', flag: '🇧🇪', logo: '/src/assets/leagues/challenger-pro-league.png' },
+  'pro-league-b': { name: 'Challenger Pro League', country: 'Belgium', flag: '🇧🇪', logoUrl: '/src/assets/leagues/challenger-pro-league.png' },
   
   // Brazil
-  'serie-a-bra': { name: 'Série A', country: 'Brazil', flag: '🇧🇷', logo: '/src/assets/leagues/serie-a-bra.png' },
-  'serie-b-bra': { name: 'Série B', country: 'Brazil', flag: '🇧🇷', logo: '/src/assets/leagues/serie-b-bra.png' },
+  'serie-a-bra': { name: 'Série A', country: 'Brazil', flag: '🇧🇷', logoUrl: '/src/assets/leagues/serie-a-bra.png' },
+  'serie-b-bra': { name: 'Série B', country: 'Brazil', flag: '🇧🇷', logoUrl: '/src/assets/leagues/serie-b-bra.png' },
   
   // Bulgaria
-  'first-league-bgr': { name: 'First League', country: 'Bulgaria', flag: '🇧🇬', logo: LEAGUE_LOGO_MAP['first-league-bgr'] },
+  'first-league-bgr': { name: 'First League', country: 'Bulgaria', flag: '🇧🇬', logoUrl: bulgariaFirstLeague },
   
   // Chile
-  'primera-division-chl': { name: 'Primera División', country: 'Chile', flag: '🇨🇱', logo: LEAGUE_LOGO_MAP['primera-division-chl'] },
-  'primera-b-chl': { name: 'Primera B', country: 'Chile', flag: '🇨🇱', logo: LEAGUE_LOGO_MAP['primera-b-chl'] },
+  'primera-division-chl': { name: 'Primera División', country: 'Chile', flag: '🇨🇱', logoUrl: chilePrimeraDiv },
+  'primera-b-chl': { name: 'Primera B', country: 'Chile', flag: '🇨🇱', logoUrl: chilePrimeraB },
   
   // China
-  'super-league-chn': { name: 'Super League', country: 'China', flag: '🇨🇳', logo: '🇨🇳' },
-  'league-one-chn': { name: 'League One', country: 'China', flag: '🇨🇳', logo: '🇨🇳' },
+  'super-league-chn': { name: 'Super League', country: 'China', flag: '🇨🇳' },
+  'league-one-chn': { name: 'League One', country: 'China', flag: '🇨🇳' },
   
   // Colombia
-  'primera-a-col': { name: 'Categoría Primera A', country: 'Colombia', flag: '🇨🇴', logo: '🇨🇴' },
-  'primera-b-col': { name: 'Categoría Primera B', country: 'Colombia', flag: '🇨🇴', logo: '🇨🇴' },
+  'primera-a-col': { name: 'Categoría Primera A', country: 'Colombia', flag: '🇨🇴' },
+  'primera-b-col': { name: 'Categoría Primera B', country: 'Colombia', flag: '🇨🇴' },
   
   // Czech Republic
-  'first-league-cze': { name: 'First League', country: 'Czech Republic', flag: '🇨🇿', logo: '🇨🇿' },
+  'first-league-cze': { name: 'First League', country: 'Czech Republic', flag: '🇨🇿' },
   
   // Denmark
-  'superliga-dnk': { name: 'Superliga', country: 'Denmark', flag: '🇩🇰', logo: '🇩🇰' },
-  'first-division-dnk': { name: '1st Division', country: 'Denmark', flag: '🇩🇰', logo: '🇩🇰' },
+  'superliga-dnk': { name: 'Superliga', country: 'Denmark', flag: '🇩🇰' },
+  'first-division-dnk': { name: '1st Division', country: 'Denmark', flag: '🇩🇰' },
   
   // England
-  'premier-league': { name: 'Premier League', country: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', logo: '/src/assets/leagues/premier-league.png' },
+  'premier-league': { name: 'Premier League', country: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', logoUrl: '/src/assets/leagues/premier-league.png' },
   
   // France
-  'ligue-1': { name: 'Ligue 1', country: 'France', flag: '🇫🇷', logo: '/src/assets/leagues/ligue-1.png' },
-  'ligue-2': { name: 'Ligue 2', country: 'France', flag: '🇫🇷', logo: '/src/assets/leagues/ligue-2.png' },
+  'ligue-1': { name: 'Ligue 1', country: 'France', flag: '🇫🇷', logoUrl: '/src/assets/leagues/ligue-1.png' },
+  'ligue-2': { name: 'Ligue 2', country: 'France', flag: '🇫🇷', logoUrl: '/src/assets/leagues/ligue-2.png' },
   
   // Germany
-  'bundesliga': { name: 'Bundesliga', country: 'Germany', flag: '🇩🇪', logo: '/src/assets/leagues/bundesliga.png' },
-  'bundesliga-2': { name: '2. Bundesliga', country: 'Germany', flag: '🇩🇪', logo: '/src/assets/leagues/bundesliga-2.png' },
+  'bundesliga': { name: 'Bundesliga', country: 'Germany', flag: '🇩🇪', logoUrl: '/src/assets/leagues/bundesliga.png' },
+  'bundesliga-2': { name: '2. Bundesliga', country: 'Germany', flag: '🇩🇪', logoUrl: '/src/assets/leagues/bundesliga-2.png' },
   
   // Ireland
-  'premier-division-irl': { name: 'Premier Division', country: 'Ireland', flag: '🇮🇪', logo: '🇮🇪' },
-  'first-division-irl': { name: 'First Division', country: 'Ireland', flag: '🇮🇪', logo: '🇮🇪' },
+  'premier-division-irl': { name: 'Premier Division', country: 'Ireland', flag: '🇮🇪' },
+  'first-division-irl': { name: 'First Division', country: 'Ireland', flag: '🇮🇪' },
   
   // Italy
-  'serie-a': { name: 'Serie A', country: 'Italy', flag: '🇮🇹', logo: '/src/assets/leagues/serie-a.png' },
-  'serie-b': { name: 'Serie B', country: 'Italy', flag: '🇮🇹', logo: '/src/assets/leagues/serie-b.png' },
+  'serie-a': { name: 'Serie A', country: 'Italy', flag: '🇮🇹', logoUrl: '/src/assets/leagues/serie-a.png' },
+  'serie-b': { name: 'Serie B', country: 'Italy', flag: '🇮🇹', logoUrl: '/src/assets/leagues/serie-b.png' },
   
   // Japan
-  'j1-league': { name: 'J1 League', country: 'Japan', flag: '🇯🇵', logo: '🇯🇵' },
-  'j2-league': { name: 'J2 League', country: 'Japan', flag: '🇯🇵', logo: '🇯🇵' },
+  'j1-league': { name: 'J1 League', country: 'Japan', flag: '🇯🇵' },
+  'j2-league': { name: 'J2 League', country: 'Japan', flag: '🇯🇵' },
   
   // Mexico
-  'liga-mx': { name: 'Liga MX', country: 'Mexico', flag: '🇲🇽', logo: '🇲🇽' },
-  'liga-expansion-mx': { name: 'Liga de Expansión MX', country: 'Mexico', flag: '🇲🇽', logo: '🇲🇽' },
+  'liga-mx': { name: 'Liga MX', country: 'Mexico', flag: '🇲🇽' },
+  'liga-expansion-mx': { name: 'Liga de Expansión MX', country: 'Mexico', flag: '🇲🇽' },
   
   // Morocco
-  'botola': { name: 'Botola', country: 'Morocco', flag: '🇲🇦', logo: LEAGUE_LOGO_MAP['botola'] },
+  'botola': { name: 'Botola', country: 'Morocco', flag: '🇲🇦', logoUrl: moroccoBotola },
   
   // Netherlands
-  'eredivisie': { name: 'Eredivisie', country: 'Netherlands', flag: '🇳🇱', logo: '/src/assets/leagues/eredivisie.png' },
-  'eerste-divisie': { name: 'Eerste Divisie', country: 'Netherlands', flag: '🇳🇱', logo: '/src/assets/leagues/eerste-divisie.png' },
+  'eredivisie': { name: 'Eredivisie', country: 'Netherlands', flag: '🇳🇱', logoUrl: '/src/assets/leagues/eredivisie.png' },
+  'eerste-divisie': { name: 'Eerste Divisie', country: 'Netherlands', flag: '🇳🇱', logoUrl: '/src/assets/leagues/eerste-divisie.png' },
   
   // North America
-  'mls': { name: 'MLS', country: 'North America', flag: '🇺🇸', logo: '/src/assets/leagues/mls.png' },
+  'mls': { name: 'MLS', country: 'North America', flag: '🇺🇸', logoUrl: '/src/assets/leagues/mls.png' },
   
   // Norway
-  'eliteserien': { name: 'Eliteserien', country: 'Norway', flag: '🇳🇴', logo: '🇳🇴' },
-  'obos-ligaen': { name: 'OBOS-ligaen', country: 'Norway', flag: '🇳🇴', logo: '🇳🇴' },
+  'eliteserien': { name: 'Eliteserien', country: 'Norway', flag: '🇳🇴' },
+  'obos-ligaen': { name: 'OBOS-ligaen', country: 'Norway', flag: '🇳🇴' },
   
   // Peru
-  'liga-1-per': { name: 'Liga 1', country: 'Peru', flag: '🇵🇪', logo: LEAGUE_LOGO_MAP['liga-1-per'] },
+  'liga-1-per': { name: 'Liga 1', country: 'Peru', flag: '🇵🇪', logoUrl: peruLiga1 },
   
   // Poland
-  'ekstraklasa': { name: 'Ekstraklasa', country: 'Poland', flag: '🇵🇱', logo: LEAGUE_LOGO_MAP['ekstraklasa'] },
+  'ekstraklasa': { name: 'Ekstraklasa', country: 'Poland', flag: '🇵🇱', logoUrl: polandEkstraklasa },
   
   // Portugal
-  'liga-portugal': { name: 'Liga Portugal', country: 'Portugal', flag: '🇵🇹', logo: '/src/assets/leagues/liga-portugal.png' },
+  'liga-portugal': { name: 'Liga Portugal', country: 'Portugal', flag: '🇵🇹', logoUrl: '/src/assets/leagues/liga-portugal.png' },
   
   // Romania
-  'liga-1-rou': { name: 'Liga I', country: 'Romania', flag: '🇷🇴', logo: LEAGUE_LOGO_MAP['liga-1-rou'] },
+  'liga-1-rou': { name: 'Liga I', country: 'Romania', flag: '🇷🇴', logoUrl: romaniaSuperLiga },
   
   // Scotland
-  'premiership-sct': { name: 'Premiership', country: 'Scotland', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', logo: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' },
-  'championship': { name: 'Championship', country: 'Scotland', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', logo: '/src/assets/leagues/championship.png' },
+  'premiership-sct': { name: 'Premiership', country: 'Scotland', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' },
+  'championship': { name: 'Championship', country: 'Scotland', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', logoUrl: '/src/assets/leagues/championship.png' },
   
   // Serbia
-  'superliga-srb': { name: 'SuperLiga', country: 'Serbia', flag: '🇷🇸', logo: LEAGUE_LOGO_MAP['superliga-srb'] },
+  'superliga-srb': { name: 'SuperLiga', country: 'Serbia', flag: '🇷🇸', logoUrl: serbiaSuperLiga },
   
   // Slovakia
-  'fortuna-liga': { name: 'Fortuna Liga', country: 'Slovakia', flag: '🇸🇰', logo: LEAGUE_LOGO_MAP['fortuna-liga'] },
+  'fortuna-liga': { name: 'Fortuna Liga', country: 'Slovakia', flag: '🇸🇰', logoUrl: slovakiaFortuna },
   
   // Slovenia
-  'prva-liga': { name: 'PrvaLiga', country: 'Slovenia', flag: '🇸🇮', logo: LEAGUE_LOGO_MAP['prva-liga'] },
+  'prva-liga': { name: 'PrvaLiga', country: 'Slovenia', flag: '🇸🇮', logoUrl: sloveniaPrvaLiga },
   
   // South Korea
-  'k-league-1': { name: 'K League 1', country: 'South Korea', flag: '🇰🇷', logo: '🇰🇷' },
-  'k-league-2': { name: 'K League 2', country: 'South Korea', flag: '🇰🇷', logo: '🇰🇷' },
+  'k-league-1': { name: 'K League 1', country: 'South Korea', flag: '🇰🇷' },
+  'k-league-2': { name: 'K League 2', country: 'South Korea', flag: '🇰🇷' },
   
   // Spain
-  'la-liga': { name: 'La Liga', country: 'Spain', flag: '🇪🇸', logo: '/src/assets/leagues/la-liga.png' },
-  'segunda-division': { name: 'Segunda División', country: 'Spain', flag: '🇪🇸', logo: '/src/assets/leagues/segunda-division.png' },
+  'la-liga': { name: 'La Liga', country: 'Spain', flag: '🇪🇸', logoUrl: '/src/assets/leagues/la-liga.png' },
+  'segunda-division': { name: 'Segunda División', country: 'Spain', flag: '🇪🇸', logoUrl: '/src/assets/leagues/segunda-division.png' },
   
   // Sweden
-  'allsvenskan': { name: 'Allsvenskan', country: 'Sweden', flag: '🇸🇪', logo: '🇸🇪' },
-  'superettan': { name: 'Superettan', country: 'Sweden', flag: '🇸🇪', logo: '🇸🇪' },
+  'allsvenskan': { name: 'Allsvenskan', country: 'Sweden', flag: '🇸🇪' },
+  'superettan': { name: 'Superettan', country: 'Sweden', flag: '🇸🇪' },
   
   // Switzerland
-  'super-league-che': { name: 'Super League', country: 'Switzerland', flag: '🇨🇭', logo: LEAGUE_LOGO_MAP['super-league-che'] },
-  'challenge-league': { name: 'Challenge League', country: 'Switzerland', flag: '🇨🇭', logo: LEAGUE_LOGO_MAP['challenge-league'] },
+  'super-league-che': { name: 'Super League', country: 'Switzerland', flag: '🇨🇭', logoUrl: switzerlandSuper },
+  'challenge-league': { name: 'Challenge League', country: 'Switzerland', flag: '🇨🇭', logoUrl: switzerlandChallenge },
   
   // Turkey
-  'super-lig': { name: 'Süper Lig', country: 'Turkey', flag: '🇹🇷', logo: '/src/assets/leagues/super-lig.png' },
-  'lig-1': { name: '1. Lig', country: 'Turkey', flag: '🇹🇷', logo: LEAGUE_LOGO_MAP['lig-1'] },
+  'super-lig': { name: 'Süper Lig', country: 'Turkey', flag: '🇹🇷', logoUrl: '/src/assets/leagues/super-lig.png' },
+  'lig-1': { name: '1. Lig', country: 'Turkey', flag: '🇹🇷', logoUrl: turkeyLig1 },
 } as const;
 
 export type LeagueId = keyof typeof LEAGUES;

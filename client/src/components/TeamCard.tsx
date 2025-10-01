@@ -25,8 +25,12 @@ export default function TeamCard({ team, className }: TeamCardProps) {
               {team.name}
             </span>
           </div>
-          <Badge variant="outline" className="text-xs" data-testid={`badge-league-${team.id}`}>
-            <span className="mr-1">{league.flag}</span>
+          <Badge variant="outline" className="text-xs flex items-center gap-1" data-testid={`badge-league-${team.id}`}>
+            {'logoUrl' in league && league.logoUrl ? (
+              <img src={league.logoUrl} alt={league.name} className="h-4 w-4 object-contain" />
+            ) : (
+              <span>{league.flag}</span>
+            )}
             {league.name}
           </Badge>
         </div>
@@ -46,10 +50,10 @@ export default function TeamCard({ team, className }: TeamCardProps) {
                 className="text-xs h-7"
                 data-testid={`button-standings-${team.id}`}
               >
-                {league.logo && league.logo.includes('/') ? (
-                  <img src={league.logo} alt={league.name} className="h-4 w-4 mr-1 object-contain" />
+                {'logoUrl' in league && league.logoUrl ? (
+                  <img src={league.logoUrl} alt={league.name} className="h-4 w-4 mr-1 object-contain" />
                 ) : (
-                  <span className="mr-1">{league.logo}</span>
+                  <span className="mr-1">{league.flag}</span>
                 )}
                 <ExternalLink className="h-3 w-3 mr-1" />
                 Standings
