@@ -25,3 +25,21 @@ export function formatFixtureDateTime(isoDateString: string) {
 export function formatOdds(odds: number): string {
   return odds.toFixed(2);
 }
+
+export function getBookmakerUrl(bookmakerName: string): string {
+  const bookmakerUrls: Record<string, string> = {
+    'Bet365': 'https://www.bet365.com',
+    'William Hill': 'https://www.williamhill.com',
+    'Betfair': 'https://www.betfair.com',
+    'Sisal': 'https://www.sisal.it',
+    'Tipico': 'https://www.tipico.com',
+    'PMU': 'https://www.pmu.fr',
+    'Fortuna': 'https://www.ifortuna.sk',
+    'Superbet': 'https://www.superbet.ro',
+    'Mozzart': 'https://www.mozzartbet.rs',
+    'Credit Suisse': 'https://www.credit-suisse.com',
+    'Itau': 'https://www.itau.cl',
+  };
+  
+  return bookmakerUrls[bookmakerName] || '#';
+}

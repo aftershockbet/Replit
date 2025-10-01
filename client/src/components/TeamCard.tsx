@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import StreakBadge from "./StreakBadge";
 import { type TeamWithStreak, LEAGUES } from "@shared/schema";
-import { formatFixtureDateTime, formatOdds } from "@shared/utils";
+import { formatFixtureDateTime, formatOdds, getBookmakerUrl } from "@shared/utils";
 import { Clock, ExternalLink, TrendingUp } from "lucide-react";
 
 interface TeamCardProps {
@@ -105,34 +105,76 @@ export default function TeamCard({ team, className }: TeamCardProps) {
                 </span>
               </div>
               <div className="flex flex-wrap gap-2 text-xs" data-testid={`betting-odds-${team.id}`}>
-                <Badge variant="secondary" className="px-2 py-1 text-xs">
-                  Win {formatOdds(team.nextFixture.odds.win)}
-                </Badge>
-                <Badge variant="secondary" className="px-2 py-1 text-xs">
-                  Draw {formatOdds(team.nextFixture.odds.draw)}
-                </Badge>
-                <Badge variant="secondary" className="px-2 py-1 text-xs">
-                  Loss {formatOdds(team.nextFixture.odds.loss)}
-                </Badge>
+                <a 
+                  href={getBookmakerUrl(team.nextFixture.odds.bookmaker)} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  data-testid={`link-odds-win-${team.id}`}
+                >
+                  <Badge variant="secondary" className="px-2 py-1 text-xs cursor-pointer hover-elevate active-elevate-2">
+                    (1) {formatOdds(team.nextFixture.odds.win)}
+                  </Badge>
+                </a>
+                <a 
+                  href={getBookmakerUrl(team.nextFixture.odds.bookmaker)} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  data-testid={`link-odds-draw-${team.id}`}
+                >
+                  <Badge variant="secondary" className="px-2 py-1 text-xs cursor-pointer hover-elevate active-elevate-2">
+                    (X) {formatOdds(team.nextFixture.odds.draw)}
+                  </Badge>
+                </a>
+                <a 
+                  href={getBookmakerUrl(team.nextFixture.odds.bookmaker)} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  data-testid={`link-odds-loss-${team.id}`}
+                >
+                  <Badge variant="secondary" className="px-2 py-1 text-xs cursor-pointer hover-elevate active-elevate-2">
+                    (2) {formatOdds(team.nextFixture.odds.loss)}
+                  </Badge>
+                </a>
               </div>
               
               {/* Double Chance Odds */}
               {(team.nextFixture.odds.doubleChance1X || team.nextFixture.odds.doubleChance12 || team.nextFixture.odds.doubleChanceX2) && (
                 <div className="flex flex-wrap gap-2 text-xs mt-2" data-testid={`double-chance-odds-${team.id}`}>
                   {team.nextFixture.odds.doubleChance1X && (
-                    <Badge variant="secondary" className="px-2 py-1 text-xs">
-                      1X {formatOdds(team.nextFixture.odds.doubleChance1X)}
-                    </Badge>
+                    <a 
+                      href={getBookmakerUrl(team.nextFixture.odds.bookmaker)} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      data-testid={`link-odds-1x-${team.id}`}
+                    >
+                      <Badge variant="secondary" className="px-2 py-1 text-xs cursor-pointer hover-elevate active-elevate-2">
+                        (1X) {formatOdds(team.nextFixture.odds.doubleChance1X)}
+                      </Badge>
+                    </a>
                   )}
                   {team.nextFixture.odds.doubleChance12 && (
-                    <Badge variant="secondary" className="px-2 py-1 text-xs">
-                      12 {formatOdds(team.nextFixture.odds.doubleChance12)}
-                    </Badge>
+                    <a 
+                      href={getBookmakerUrl(team.nextFixture.odds.bookmaker)} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      data-testid={`link-odds-12-${team.id}`}
+                    >
+                      <Badge variant="secondary" className="px-2 py-1 text-xs cursor-pointer hover-elevate active-elevate-2">
+                        (12) {formatOdds(team.nextFixture.odds.doubleChance12)}
+                      </Badge>
+                    </a>
                   )}
                   {team.nextFixture.odds.doubleChanceX2 && (
-                    <Badge variant="secondary" className="px-2 py-1 text-xs">
-                      X2 {formatOdds(team.nextFixture.odds.doubleChanceX2)}
-                    </Badge>
+                    <a 
+                      href={getBookmakerUrl(team.nextFixture.odds.bookmaker)} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      data-testid={`link-odds-x2-${team.id}`}
+                    >
+                      <Badge variant="secondary" className="px-2 py-1 text-xs cursor-pointer hover-elevate active-elevate-2">
+                        (X2) {formatOdds(team.nextFixture.odds.doubleChanceX2)}
+                      </Badge>
+                    </a>
                   )}
                 </div>
               )}
