@@ -6,6 +6,7 @@ import StreakBadge from "./StreakBadge";
 import { type TeamWithStreak, LEAGUES } from "@shared/schema";
 import { formatFixtureDateTime, formatOdds, getBookmakerUrl } from "@shared/utils";
 import { Clock, ExternalLink, TrendingUp } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface TeamCardProps {
   team: TeamWithStreak;
@@ -17,6 +18,7 @@ export default function TeamCard({ team, className }: TeamCardProps) {
   const { date: fixtureDate, time: fixtureTime } = formatFixtureDateTime(team.nextFixture.date);
   const bookmakerUrl = getBookmakerUrl(team.nextFixture.odds.bookmaker);
   const hasValidBookmakerUrl = bookmakerUrl !== '#';
+  const isMobile = useIsMobile();
   
   return (
     <Card className={`hover-elevate ${className}`} data-testid={`card-team-${team.id}`}>
@@ -56,8 +58,7 @@ export default function TeamCard({ team, className }: TeamCardProps) {
                   <span className="mr-1">{league.flag}</span>
                 )}
                 <ExternalLink className="h-3 w-3 mr-1" />
-                <span className="hidden xs:inline">Standings</span>
-                <span className="xs:hidden">Table</span>
+                {isMobile ? 'Table' : 'Standings'}
               </Button>
             </Link>
           </div>
