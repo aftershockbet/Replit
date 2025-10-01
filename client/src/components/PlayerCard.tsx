@@ -34,52 +34,51 @@ export default function PlayerCard({ player, className }: PlayerCardProps) {
   return (
     <Card className={`hover-elevate ${className}`} data-testid={`card-player-${player.id}`}>
       <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="space-y-3">
+          <div className="flex items-start gap-3">
             {/* Player Photo */}
-            <Avatar className="h-12 w-12">
+            <Avatar className="h-12 w-12 shrink-0">
               <AvatarImage src={player.photoUrl} alt={player.name} />
               <AvatarFallback>{player.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
             </Avatar>
             
-            <div className="flex flex-col">
-              <span className="text-lg font-semibold" data-testid={`text-player-name-${player.id}`}>
+            <div className="flex flex-col flex-1 min-w-0">
+              <h3 className="text-base sm:text-lg font-semibold break-words" data-testid={`text-player-name-${player.id}`}>
                 {player.name}
-              </span>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              </h3>
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground flex-wrap">
                 <span className="mr-1">{player.clubLogo}</span>
-                <span>{player.clubName}</span>
+                <span className="truncate">{player.clubName}</span>
                 <Badge 
-                  className={`text-white text-xs ${getPositionColor(player.position)}`}
+                  className={`text-white text-xs ${getPositionColor(player.position)} shrink-0`}
                   data-testid={`badge-position-${player.id}`}
                 >
                   {player.position}
                 </Badge>
               </div>
             </div>
-          </div>
-          
-          <div className="flex flex-col items-end gap-1">
-            <Badge variant="outline" className="text-xs flex items-center gap-1" data-testid={`badge-league-${player.id}`}>
+            
+            <Badge variant="outline" className="text-xs flex items-center gap-1 shrink-0 w-fit" data-testid={`badge-league-${player.id}`}>
               {'logoUrl' in league && league.logoUrl ? (
                 <img src={league.logoUrl} alt={league.name} className="h-4 w-4 object-contain" />
               ) : (
                 <span>{league.flag}</span>
               )}
-              {league.name}
+              <span className="whitespace-nowrap hidden sm:inline">{league.name}</span>
             </Badge>
-            {player.favoriteVictim && (
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="text-xs h-7"
-                data-testid={`button-favorite-victim-${player.id}`}
-              >
-                <Target className="h-3 w-3 mr-1 text-amber-500" />
-                Favorite Victim: {player.favoriteVictim.teamName} ({player.favoriteVictim.goalsScored})
-              </Button>
-            )}
           </div>
+          
+          {player.favoriteVictim && (
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="text-xs h-7 w-full"
+              data-testid={`button-favorite-victim-${player.id}`}
+            >
+              <Target className="h-3 w-3 mr-1 text-amber-500 shrink-0" />
+              <span className="truncate">Favorite Victim: {player.favoriteVictim.teamName} ({player.favoriteVictim.goalsScored})</span>
+            </Button>
+          )}
         </div>
       </CardHeader>
       
@@ -125,13 +124,13 @@ export default function PlayerCard({ player, className }: PlayerCardProps) {
           </div>
           <div className="space-y-2">
             <div className="text-sm" data-testid={`text-next-fixture-${player.id}`}>
-              <div className="font-medium">
+              <div className="font-medium break-words">
                 {player.nextFixture.isHome 
                   ? `${player.clubName} vs ${player.nextFixture.opponent}`
                   : `${player.nextFixture.opponent} vs ${player.clubName}`
                 }
               </div>
-              <div className="text-muted-foreground text-xs">
+              <div className="text-muted-foreground text-xs mt-1">
                 {fixtureDate} at {fixtureTime} CET
               </div>
             </div>
