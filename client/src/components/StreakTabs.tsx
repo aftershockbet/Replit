@@ -38,11 +38,12 @@ export default function StreakTabs({
       <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger 
           value="winning" 
-          className="flex items-center gap-2 data-[state=active]:bg-[#40af0f] data-[state=active]:text-white"
+          className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-[#40af0f] data-[state=active]:text-white"
           data-testid="tab-winning-streaks"
         >
           <Trophy className="h-4 w-4" />
-          <span>Winning Streaks</span>
+          <span className="hidden sm:inline">Winning Streaks</span>
+          <span className="sm:hidden text-xs">Win</span>
           <Badge variant="secondary" className="ml-1">
             {winningCount}
           </Badge>
@@ -50,11 +51,12 @@ export default function StreakTabs({
         
         <TabsTrigger 
           value="drawing" 
-          className="flex items-center gap-2 data-[state=active]:bg-[#efb609] data-[state=active]:text-white"
+          className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-[#efb609] data-[state=active]:text-white"
           data-testid="tab-drawing-streaks"
         >
           <Minus className="h-4 w-4" />
-          <span>Drawing Streaks</span>
+          <span className="hidden sm:inline">Drawing Streaks</span>
+          <span className="sm:hidden text-xs">Draw</span>
           <Badge variant="secondary" className="ml-1">
             {drawingCount}
           </Badge>
@@ -62,11 +64,12 @@ export default function StreakTabs({
         
         <TabsTrigger 
           value="goalscorers" 
-          className="flex items-center gap-2 data-[state=active]:bg-[#c400ff] data-[state=active]:text-white"
+          className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-[#c60000] data-[state=active]:text-white"
           data-testid="tab-goalscorers-streaks"
         >
           <Target className="h-4 w-4" />
-          <span>Goalscorers</span>
+          <span className="hidden sm:inline">Goalscorers</span>
+          <span className="sm:hidden text-xs">Goals</span>
           <Badge variant="secondary" className="ml-1">
             {goalscorersCount}
           </Badge>

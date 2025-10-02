@@ -43,18 +43,20 @@ export default function PlayerCard({ player, className }: PlayerCardProps) {
             </Avatar>
             
             <div className="flex flex-col flex-1 min-w-0">
-              <h3 className="text-base sm:text-lg font-semibold break-words" data-testid={`text-player-name-${player.id}`}>
-                {player.name}
-              </h3>
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground flex-wrap">
-                <span className="mr-1">{player.clubLogo}</span>
-                <span className="truncate">{player.clubName}</span>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="text-base sm:text-lg font-semibold break-words" data-testid={`text-player-name-${player.id}`}>
+                  {player.name}
+                </h3>
                 <Badge 
-                  className={`text-white text-xs ${getPositionColor(player.position)} shrink-0`}
+                  className={`text-white text-[10px] px-1.5 py-0 h-4 ${getPositionColor(player.position)} shrink-0`}
                   data-testid={`badge-position-${player.id}`}
                 >
                   {player.position}
                 </Badge>
+              </div>
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground flex-wrap">
+                <span className="mr-1">{player.clubLogo}</span>
+                <span className="truncate">{player.clubName}</span>
               </div>
             </div>
             

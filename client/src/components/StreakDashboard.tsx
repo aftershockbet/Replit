@@ -1,7 +1,10 @@
 import { useState, useMemo, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import TeamCard from "./TeamCard";
 import PlayerCard from "./PlayerCard";
+import TeamListItem from "./TeamListItem";
+import PlayerListItem from "./PlayerListItem";
 import SearchBar from "./SearchBar";
 import LeagueFilter from "./LeagueFilter";
 import StreakTabs from "./StreakTabs";
@@ -10,7 +13,7 @@ import ThemeToggle from "./ThemeToggle";
 import StreakAlerts from "./StreakAlerts";
 import { useStreakAlerts, dismissTeamAlert, dismissPlayerAlert } from "@/hooks/use-streak-alerts";
 import { type TeamWithStreak, type PlayerWithStreak, type LeagueId, type StreakType } from "@shared/schema";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, LayoutGrid, List } from "lucide-react";
 
 interface StreakDashboardProps {
   teams: TeamWithStreak[];
@@ -32,6 +35,7 @@ export default function StreakDashboard({
   const [selectedLeagues, setSelectedLeagues] = useState<LeagueId[]>([]);
   const [displayedNewTeams, setDisplayedNewTeams] = useState<TeamWithStreak[]>([]);
   const [displayedNewPlayers, setDisplayedNewPlayers] = useState<PlayerWithStreak[]>([]);
+  const [viewMode, setViewMode] = useState<'card' | 'list'>('card');
   
   // Alert system for new teams/players
   const alerts = useStreakAlerts(teams, players);
@@ -177,11 +181,35 @@ export default function StreakDashboard({
               onSearch={setSearchQuery}
               className="flex-1"
             />
-            <LeagueFilter 
-              selectedLeagues={selectedLeagues}
-              onLeagueToggle={handleLeagueToggle}
-              onClearAll={handleClearAllLeagues}
-            />
+            <div className="flex gap-2">
+              <div className="flex border rounded-lg p-1 bg-card">
+                <Button
+                  variant={viewMode === 'card' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setViewMode('card')}
+                  className="h-8 px-3"
+                  data-testid="button-view-card"
+                >
+                  <LayoutGrid className="h-4 w-4 mr-1" />
+                  Cards
+                </Button>
+                <Button
+                  variant={viewMode === 'list' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setViewMode('list')}
+                  className="h-8 px-3"
+                  data-testid="button-view-list"
+                >
+                  <List className="h-4 w-4 mr-1" />
+                  List
+                </Button>
+              </div>
+              <LeagueFilter 
+                selectedLeagues={selectedLeagues}
+                onLeagueToggle={handleLeagueToggle}
+                onClearAll={handleClearAllLeagues}
+              />
+            </div>
           </div>
           
           {/* Mobile Status Indicator */}
@@ -232,15 +260,27 @@ export default function StreakDashboard({
                   
                   return (
                     <div key={leagueId} className="space-y-4">
-                      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-                        {leaguePlayers.map(player => (
-                          <PlayerCard 
-                            key={player.id} 
-                            player={player}
-                            className="w-full"
-                          />
-                        ))}
-                      </div>
+                      {viewMode === 'card' ? (
+                        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+                          {leaguePlayers.map(player => (
+                            <PlayerCard 
+                              key={player.id} 
+                              player={player}
+                              className="w-full"
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="space-y-3">
+                          {leaguePlayers.map(player => (
+                            <PlayerListItem 
+                              key={player.id} 
+                              player={player}
+                              className="w-full"
+                            />
+                          ))}
+                        </div>
+                      )}
                     </div>
                   );
                 })}
@@ -267,15 +307,27 @@ export default function StreakDashboard({
                   
                   return (
                     <div key={leagueId} className="space-y-4">
-                      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-                        {leagueTeams.map(team => (
-                          <TeamCard 
-                            key={team.id} 
-                            team={team}
-                            className="w-full"
-                          />
-                        ))}
-                      </div>
+                      {viewMode === 'card' ? (
+                        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+                          {leagueTeams.map(team => (
+                            <TeamCard 
+                              key={team.id} 
+                              team={team}
+                              className="w-full"
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="space-y-3">
+                          {leagueTeams.map(team => (
+                            <TeamListItem 
+                              key={team.id} 
+                              team={team}
+                              className="w-full"
+                            />
+                          ))}
+                        </div>
+                      )}
                     </div>
                   );
                 })}
