@@ -60,37 +60,37 @@ export default function TeamListItem({ team, className }: TeamListItemProps) {
                 />
               ))}
             </div>
-            <div className="flex gap-2">
-              <Link href={`/h2h/${team.id}/${team.nextFixture.opponent}`}>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="text-xs h-7"
-                  data-testid={`button-h2h-${team.id}`}
-                >
-                  <ArrowLeftRight className="h-3 w-3 mr-1" />
-                  H2H
-                </Button>
-              </Link>
-              <Link href={`/standings/${team.leagueId}?highlight=${team.id}`}>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="text-xs h-7"
-                  data-testid={`button-standings-${team.id}`}
-                >
-                  {isMobile ? 'Table' : 'Standings'}
-                </Button>
-              </Link>
-            </div>
+            <Link href={`/standings/${team.leagueId}?highlight=${team.id}`}>
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="text-xs h-7"
+                data-testid={`button-standings-${team.id}`}
+              >
+                {isMobile ? 'Table' : 'Standings'}
+              </Button>
+            </Link>
           </div>
         </div>
 
         {/* Next Fixture */}
         <div className="space-y-2">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Clock className="h-4 w-4" />
-            <span>Next fixture</span>
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Clock className="h-4 w-4" />
+              <span>Next fixture</span>
+            </div>
+            <Link href={`/h2h/${team.id}/${team.nextFixture.opponent}`}>
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="text-xs h-7"
+                data-testid={`button-h2h-${team.id}`}
+              >
+                <ArrowLeftRight className="h-3 w-3 mr-1" />
+                H2H
+              </Button>
+            </Link>
           </div>
           <div className="text-sm">
             <div className="font-medium break-words" data-testid={`text-next-fixture-${team.id}`}>

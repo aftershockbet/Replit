@@ -1,7 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Trophy, Equal, Circle } from "lucide-react";
+import { Trophy, Equal } from "lucide-react";
 import { type StreakType } from "@shared/schema";
+import goalscorerIcon from "@/assets/goalscorer-icon.jpeg";
 
 interface StreakTabsProps {
   activeTab: StreakType;
@@ -67,7 +68,7 @@ export default function StreakTabs({
           className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-[#c60000] data-[state=active]:text-white"
           data-testid="tab-goalscorers-streaks"
         >
-          <Circle className="h-4 w-4 fill-current" />
+          <img src={goalscorerIcon} alt="Goalscorer" className="h-4 w-4 object-contain" />
           <span className="hidden sm:inline">Goalscorers</span>
           <span className="sm:hidden text-xs">Goals</span>
           <Badge variant="secondary" className="ml-1">
