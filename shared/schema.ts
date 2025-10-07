@@ -23,6 +23,7 @@ export const LEAGUES = {
   'primera-nacional': { name: 'Primera Nacional', country: 'Argentina', flag: '🇦🇷' },
   
   // Belgium
+  'jupiter-pro-league': { name: 'Jupiter Pro League', country: 'Belgium', flag: '🇧🇪', logoUrl: '/src/assets/leagues/jupiter-pro-league.png' },
   'pro-league-b': { name: 'Challenger Pro League', country: 'Belgium', flag: '🇧🇪', logoUrl: '/src/assets/leagues/challenger-pro-league.png' },
   
   // Brazil
@@ -41,8 +42,8 @@ export const LEAGUES = {
   'league-one-chn': { name: 'League One', country: 'China', flag: '🇨🇳' },
   
   // Colombia
-  'primera-a-col': { name: 'Categoría Primera A', country: 'Colombia', flag: '🇨🇴' },
-  'primera-b-col': { name: 'Categoría Primera B', country: 'Colombia', flag: '🇨🇴' },
+  'primera-a-col': { name: 'Primera A', country: 'Colombia', flag: '🇨🇴' },
+  'primera-b-col': { name: 'Primera B', country: 'Colombia', flag: '🇨🇴' },
   
   // Czech Republic
   'first-league-cze': { name: 'First League', country: 'Czech Republic', flag: '🇨🇿' },

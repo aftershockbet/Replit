@@ -60,25 +60,24 @@ export default function LeagueFilter({
               const topLeagues: Record<string, number> = {
                 // England
                 'premier-league': 0,
-                'championship': 1,
                 // France
-                'ligue-1': 2,
-                'ligue-2': 3,
+                'ligue-1': 1,
+                'ligue-2': 2,
                 // Germany
-                'bundesliga': 4,
-                'bundesliga-2': 5,
+                'bundesliga': 3,
+                'bundesliga-2': 4,
                 // Italy
-                'serie-a': 6,
-                'serie-b': 7,
+                'serie-a': 5,
+                'serie-b': 6,
                 // Netherlands
-                'eredivisie': 8,
-                'eerste-divisie': 9,
+                'eredivisie': 7,
+                'eerste-divisie': 8,
                 // Portugal
-                'primeira-liga': 10,
-                'segunda-liga': 11,
+                'primeira-liga': 9,
+                'segunda-liga': 10,
                 // Spain
-                'la-liga': 12,
-                'la-liga-2': 13,
+                'la-liga': 11,
+                'la-liga-2': 12,
               };
               
               const aIsTop = a[0] in topLeagues;
