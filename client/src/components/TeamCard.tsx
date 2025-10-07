@@ -5,7 +5,7 @@ import { Link } from "wouter";
 import StreakBadge from "./StreakBadge";
 import { type TeamWithStreak, LEAGUES } from "@shared/schema";
 import { formatFixtureDateTime, formatOdds, getBookmakerUrl } from "@shared/utils";
-import { Clock, ExternalLink, TrendingUp } from "lucide-react";
+import { Clock, ExternalLink, TrendingUp, ArrowLeftRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface TeamCardProps {
@@ -20,19 +20,22 @@ export default function TeamCard({ team, className }: TeamCardProps) {
   const hasValidBookmakerUrl = bookmakerUrl !== '#';
   const isMobile = useIsMobile();
   
+  // Get border color based on streak type
+  const getBorderColor = () => {
+    if (team.streakType === 'winning') return 'border-[#40af0f] bg-[#40af0f]/5';
+    if (team.streakType === 'drawing') return 'border-[#efb609] bg-[#efb609]/5';
+    return '';
+  };
+  
   return (
-    <Card className={`hover-elevate ${className}`} data-testid={`card-team-${team.id}`}>
+    <Card className={`hover-elevate ${getBorderColor()} ${className}`} data-testid={`card-team-${team.id}`}>
       <CardHeader className="pb-3">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <h3 className="text-base sm:text-lg font-semibold break-words" data-testid={`text-team-name-${team.id}`}>
             {team.name}
           </h3>
           <Badge variant="outline" className="text-xs flex items-center gap-1 w-fit shrink-0" data-testid={`badge-league-${team.id}`}>
-            {'logoUrl' in league && league.logoUrl ? (
-              <img src={league.logoUrl} alt={league.name} className="h-4 w-4 object-contain" />
-            ) : (
-              <span>{league.flag}</span>
-            )}
+            <span>{league.flag}</span>
             <span className="whitespace-nowrap">{league.name}</span>
           </Badge>
         </div>
@@ -45,22 +48,31 @@ export default function TeamCard({ team, className }: TeamCardProps) {
             <span className="text-sm font-medium text-muted-foreground">
               Recent Form
             </span>
-            <Link href={`/standings/${team.leagueId}?highlight=${team.id}`}>
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="text-xs h-7 shrink-0"
-                data-testid={`button-standings-${team.id}`}
-              >
-                {'logoUrl' in league && league.logoUrl ? (
-                  <img src={league.logoUrl} alt={league.name} className="h-4 w-4 mr-1 object-contain" />
-                ) : (
+            <div className="flex gap-2">
+              <Link href={`/h2h/${team.id}/${team.nextFixture.opponent}`}>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="text-xs h-7 shrink-0"
+                  data-testid={`button-h2h-${team.id}`}
+                >
+                  <ArrowLeftRight className="h-3 w-3 mr-1" />
+                  H2H
+                </Button>
+              </Link>
+              <Link href={`/standings/${team.leagueId}?highlight=${team.id}`}>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="text-xs h-7 shrink-0"
+                  data-testid={`button-standings-${team.id}`}
+                >
                   <span className="mr-1">{league.flag}</span>
-                )}
-                <ExternalLink className="h-3 w-3 mr-1" />
-                {isMobile ? 'Table' : 'Standings'}
-              </Button>
-            </Link>
+                  <ExternalLink className="h-3 w-3 mr-1" />
+                  {isMobile ? 'Table' : 'Standings'}
+                </Button>
+              </Link>
+            </div>
           </div>
           
           <div className="flex gap-1 justify-center" data-testid={`streak-pattern-${team.id}`}>

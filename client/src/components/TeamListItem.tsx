@@ -4,7 +4,7 @@ import { Link } from "wouter";
 import StreakBadge from "./StreakBadge";
 import { type TeamWithStreak, LEAGUES } from "@shared/schema";
 import { formatFixtureDateTime, formatOdds, getBookmakerUrl } from "@shared/utils";
-import { Clock, ExternalLink, TrendingUp } from "lucide-react";
+import { Clock, ExternalLink, TrendingUp, ArrowLeftRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface TeamListItemProps {
@@ -19,9 +19,16 @@ export default function TeamListItem({ team, className }: TeamListItemProps) {
   const hasValidBookmakerUrl = bookmakerUrl !== '#';
   const isMobile = useIsMobile();
   
+  // Get border color based on streak type
+  const getBorderColor = () => {
+    if (team.streakType === 'winning') return 'border-[#40af0f] bg-[#40af0f]/5';
+    if (team.streakType === 'drawing') return 'border-[#efb609] bg-[#efb609]/5';
+    return '';
+  };
+  
   return (
     <div 
-      className={`border rounded-lg p-4 hover-elevate bg-card ${className}`} 
+      className={`border rounded-lg p-4 hover-elevate ${getBorderColor()} ${className}`} 
       data-testid={`list-team-${team.id}`}
     >
       <div className="space-y-3">
@@ -33,11 +40,7 @@ export default function TeamListItem({ team, className }: TeamListItemProps) {
                 {team.name}
               </h3>
               <Badge variant="outline" className="text-xs mt-1 w-fit">
-                {'logoUrl' in league && league.logoUrl ? (
-                  <img src={league.logoUrl} alt={league.name} className="h-3 w-3 mr-1 object-contain" />
-                ) : (
-                  <span className="mr-1">{league.flag}</span>
-                )}
+                <span className="mr-1">{league.flag}</span>
                 <span className="hidden sm:inline">{league.name}</span>
               </Badge>
             </div>
@@ -57,16 +60,29 @@ export default function TeamListItem({ team, className }: TeamListItemProps) {
                 />
               ))}
             </div>
-            <Link href={`/standings/${team.leagueId}?highlight=${team.id}`}>
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="text-xs h-7"
-                data-testid={`button-standings-${team.id}`}
-              >
-                {isMobile ? 'Table' : 'Standings'}
-              </Button>
-            </Link>
+            <div className="flex gap-2">
+              <Link href={`/h2h/${team.id}/${team.nextFixture.opponent}`}>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="text-xs h-7"
+                  data-testid={`button-h2h-${team.id}`}
+                >
+                  <ArrowLeftRight className="h-3 w-3 mr-1" />
+                  H2H
+                </Button>
+              </Link>
+              <Link href={`/standings/${team.leagueId}?highlight=${team.id}`}>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="text-xs h-7"
+                  data-testid={`button-standings-${team.id}`}
+                >
+                  {isMobile ? 'Table' : 'Standings'}
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
 

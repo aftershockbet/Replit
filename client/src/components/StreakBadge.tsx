@@ -87,13 +87,17 @@ export default function StreakBadge({ result, opponent, date, score, className, 
   }
 
   return (
-    <Tooltip>
+    <Tooltip delayDuration={0}>
       <TooltipTrigger asChild>
-        <div className="inline-block">
+        <button 
+          className="inline-block focus:outline-none touch-manipulation" 
+          type="button"
+          onTouchStart={(e) => e.stopPropagation()}
+        >
           {badge}
-        </div>
+        </button>
       </TooltipTrigger>
-      <TooltipContent>
+      <TooltipContent side="top" className="z-50">
         <div className="text-sm">
           <div className="font-medium">{getResultText(result, score)}</div>
           {opponent && teamName && typeof isHome !== 'undefined' && (

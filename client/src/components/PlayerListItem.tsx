@@ -28,7 +28,7 @@ export default function PlayerListItem({ player, className }: PlayerListItemProp
 
   return (
     <div 
-      className={`border rounded-lg p-4 hover-elevate bg-card ${className}`} 
+      className={`border rounded-lg p-4 hover-elevate border-[#c60000] bg-[#c60000]/5 ${className}`} 
       data-testid={`list-player-${player.id}`}
     >
       <div className="space-y-3">
@@ -58,11 +58,7 @@ export default function PlayerListItem({ player, className }: PlayerListItemProp
             </div>
             
             <Badge variant="outline" className="text-xs w-fit">
-              {'logoUrl' in league && league.logoUrl ? (
-                <img src={league.logoUrl} alt={league.name} className="h-3 w-3 mr-1 object-contain" />
-              ) : (
-                <span className="mr-1">{league.flag}</span>
-              )}
+              <span className="mr-1">{league.flag}</span>
               <span className="hidden sm:inline">{league.name}</span>
             </Badge>
           </div>

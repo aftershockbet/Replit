@@ -1,8 +1,8 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { type TeamWithStreak, type PlayerWithStreak, LEAGUES } from "@shared/schema";
-import { TrendingUp, X, Trophy, Target, Crosshair } from "lucide-react";
+import { type TeamWithStreak, type PlayerWithStreak, type StreakType, LEAGUES } from "@shared/schema";
+import { TrendingUp, X, Trophy, Target, Crosshair, Bell } from "lucide-react";
 
 interface FavoriteVictimAlert {
   player: PlayerWithStreak;
@@ -17,6 +17,8 @@ interface StreakAlertsProps {
   onDismissTeam: (teamId: string) => void;
   onDismissPlayer: (playerId: string) => void;
   onDismissFavoriteVictim?: (playerId: string) => void;
+  activeTab: StreakType;
+  onNavigateToGoalscorers?: () => void;
   className?: string;
 }
 
@@ -27,11 +29,16 @@ export default function StreakAlerts({
   onDismissTeam,
   onDismissPlayer,
   onDismissFavoriteVictim,
+  activeTab,
+  onNavigateToGoalscorers,
   className
 }: StreakAlertsProps) {
   if (newTeams.length === 0 && newPlayers.length === 0 && favoriteVictimMatches.length === 0) {
     return null;
   }
+
+  // Show bell icon on Winning/Drawing tabs, full alerts on Goalscorers tab
+  const showBellIcon = (activeTab === 'winning' || activeTab === 'drawing') && favoriteVictimMatches.length > 0;
 
   return (
     <div className={`space-y-3 ${className}`} data-testid="streak-alerts-container">
@@ -55,11 +62,7 @@ export default function StreakAlerts({
                     <div className="flex items-center gap-2">
                       <span className="font-semibold">{team.name}</span>
                       <Badge variant="outline" className="text-xs flex items-center gap-1">
-                        {'logoUrl' in league && league.logoUrl ? (
-                          <img src={league.logoUrl} alt={league.name} className="h-4 w-4 object-contain" />
-                        ) : (
-                          <span>{league.flag}</span>
-                        )}
+                        <span>{league.flag}</span>
                         {league.name}
                       </Badge>
                     </div>
@@ -104,11 +107,7 @@ export default function StreakAlerts({
                       <span className="font-semibold">{player.name}</span>
                       <span className="text-muted-foreground text-sm">({player.clubName})</span>
                       <Badge variant="outline" className="text-xs flex items-center gap-1">
-                        {'logoUrl' in league && league.logoUrl ? (
-                          <img src={league.logoUrl} alt={league.name} className="h-4 w-4 object-contain" />
-                        ) : (
-                          <span>{league.flag}</span>
-                        )}
+                        <span>{league.flag}</span>
                         {league.name}
                       </Badge>
                     </div>
@@ -132,8 +131,25 @@ export default function StreakAlerts({
         );
       })}
 
-      {/* Favorite Victim Alerts */}
-      {favoriteVictimMatches.map((alert) => {
+      {/* Favorite Victim Alerts - Bell Icon on Winning/Drawing */}
+      {showBellIcon && (
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={onNavigateToGoalscorers}
+          className="border-amber-500 bg-amber-500/10 hover:bg-amber-500/20 text-foreground relative"
+          data-testid="button-favorite-victim-bell"
+        >
+          <Bell className="h-5 w-5 text-amber-500 mr-2" />
+          <span>Favorite Victim Alerts</span>
+          <Badge variant="default" className="ml-2 bg-amber-500 text-white">
+            {favoriteVictimMatches.length}
+          </Badge>
+        </Button>
+      )}
+
+      {/* Favorite Victim Alerts - Full Cards on Goalscorers Tab */}
+      {activeTab === 'goalscorers' && favoriteVictimMatches.map((alert) => {
         const league = LEAGUES[alert.player.leagueId];
         return (
           <Alert 
@@ -153,11 +169,7 @@ export default function StreakAlerts({
                       <span className="font-semibold">{alert.player.name}</span>
                       <span className="text-muted-foreground text-sm">({alert.player.clubName})</span>
                       <Badge variant="outline" className="text-xs flex items-center gap-1">
-                        {'logoUrl' in league && league.logoUrl ? (
-                          <img src={league.logoUrl} alt={league.name} className="h-4 w-4 object-contain" />
-                        ) : (
-                          <span>{league.flag}</span>
-                        )}
+                        <span>{league.flag}</span>
                         {league.name}
                       </Badge>
                     </div>

@@ -32,7 +32,7 @@ export default function PlayerCard({ player, className }: PlayerCardProps) {
   };
 
   return (
-    <Card className={`hover-elevate ${className}`} data-testid={`card-player-${player.id}`}>
+    <Card className={`hover-elevate border-[#c60000] bg-[#c60000]/5 ${className}`} data-testid={`card-player-${player.id}`}>
       <CardHeader className="pb-3">
         <div className="space-y-3">
           <div className="flex items-start gap-3">
@@ -61,11 +61,7 @@ export default function PlayerCard({ player, className }: PlayerCardProps) {
             </div>
             
             <Badge variant="outline" className="text-xs flex items-center gap-1 shrink-0 w-fit" data-testid={`badge-league-${player.id}`}>
-              {'logoUrl' in league && league.logoUrl ? (
-                <img src={league.logoUrl} alt={league.name} className="h-4 w-4 object-contain" />
-              ) : (
-                <span>{league.flag}</span>
-              )}
+              <span>{league.flag}</span>
               <span className="whitespace-nowrap hidden sm:inline">{league.name}</span>
             </Badge>
           </div>

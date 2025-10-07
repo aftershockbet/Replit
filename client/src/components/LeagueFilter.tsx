@@ -55,7 +55,45 @@ export default function LeagueFilter({
         <DropdownMenuContent className="w-56 max-h-96 overflow-y-auto" align="start">
           {Object.entries(LEAGUES)
             .sort((a, b) => {
-              // Sort by country first, then by league name
+              // Define top countries and their order
+              const topCountries = ['England', 'France', 'Germany', 'Italy', 'Netherlands', 'Portugal', 'Spain'];
+              const topLeagues: Record<string, number> = {
+                // England
+                'premier-league': 0,
+                'championship': 1,
+                // France
+                'ligue-1': 2,
+                'ligue-2': 3,
+                // Germany
+                'bundesliga': 4,
+                'bundesliga-2': 5,
+                // Italy
+                'serie-a': 6,
+                'serie-b': 7,
+                // Netherlands
+                'eredivisie': 8,
+                'eerste-divisie': 9,
+                // Portugal
+                'primeira-liga': 10,
+                'segunda-liga': 11,
+                // Spain
+                'la-liga': 12,
+                'la-liga-2': 13,
+              };
+              
+              const aIsTop = a[0] in topLeagues;
+              const bIsTop = b[0] in topLeagues;
+              
+              // Both are top leagues - sort by predefined order
+              if (aIsTop && bIsTop) {
+                return topLeagues[a[0]] - topLeagues[b[0]];
+              }
+              
+              // One is top league - top league comes first
+              if (aIsTop) return -1;
+              if (bIsTop) return 1;
+              
+              // Both are not top leagues - sort alphabetically by country then name
               const countryCompare = a[1].country.localeCompare(b[1].country);
               if (countryCompare !== 0) return countryCompare;
               return a[1].name.localeCompare(b[1].name);
@@ -67,11 +105,7 @@ export default function LeagueFilter({
                 onCheckedChange={() => handleLeagueToggle(leagueId as LeagueId)}
                 data-testid={`checkbox-league-${leagueId}`}
               >
-                {'logoUrl' in league && league.logoUrl ? (
-                  <img src={league.logoUrl} alt={league.name} className="h-4 w-4 mr-2 object-contain" />
-                ) : (
-                  <span className="mr-2">{league.flag}</span>
-                )}
+                <span className="mr-2">{league.flag}</span>
                 {league.name}
               </DropdownMenuCheckboxItem>
             ))}
@@ -90,11 +124,7 @@ export default function LeagueFilter({
                 className="flex items-center gap-1"
                 data-testid={`badge-selected-league-${leagueId}`}
               >
-                {'logoUrl' in league && league.logoUrl ? (
-                  <img src={league.logoUrl} alt={league.name} className="h-4 w-4 object-contain" />
-                ) : (
-                  <span>{league.flag}</span>
-                )}
+                <span>{league.flag}</span>
                 <span>{league.name}</span>
                 <Button
                   variant="ghost"

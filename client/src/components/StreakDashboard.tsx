@@ -228,6 +228,8 @@ export default function StreakDashboard({
           favoriteVictimMatches={alerts.favoriteVictimMatches}
           onDismissTeam={handleDismissTeamAlert}
           onDismissPlayer={handleDismissPlayerAlert}
+          activeTab={activeTab}
+          onNavigateToGoalscorers={() => setActiveTab('goalscorers')}
           className="mb-6"
         />
         
