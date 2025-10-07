@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import StreakDashboardExample from "@/components/examples/StreakDashboard";
 import Standings from "@/pages/standings";
 import TopScorers from "@/pages/top-scorers";
+import H2H from "@/pages/h2h";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -14,6 +15,7 @@ function Router() {
       <Route path="/" component={StreakDashboardExample} />
       <Route path="/standings/:leagueId" component={Standings} />
       <Route path="/top-scorers/:leagueId" component={TopScorers} />
+      <Route path="/h2h/:teamId/:opponentId" component={H2H} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>
