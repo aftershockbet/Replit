@@ -53,51 +53,73 @@ export default function LeagueFilter({
         </DropdownMenuTrigger>
         
         <DropdownMenuContent className="w-56 max-h-96 overflow-y-auto" align="start">
-          {Object.entries(LEAGUES)
-            .sort((a, b) => {
-              // Define top countries and their order
-              const topCountries = ['England', 'France', 'Germany', 'Italy', 'Netherlands', 'Portugal', 'Spain'];
-              const topLeagues: Record<string, number> = {
-                // England
-                'premier-league': 0,
-                // France
-                'ligue-1': 1,
-                'ligue-2': 2,
-                // Germany
-                'bundesliga': 3,
-                'bundesliga-2': 4,
-                // Italy
-                'serie-a': 5,
-                'serie-b': 6,
-                // Netherlands
-                'eredivisie': 7,
-                'eerste-divisie': 8,
-                // Portugal
-                'primeira-liga': 9,
-                'segunda-liga': 10,
-                // Spain
-                'la-liga': 11,
-                'la-liga-2': 12,
-              };
-              
-              const aIsTop = a[0] in topLeagues;
-              const bIsTop = b[0] in topLeagues;
-              
-              // Both are top leagues - sort by predefined order
-              if (aIsTop && bIsTop) {
-                return topLeagues[a[0]] - topLeagues[b[0]];
+          {(() => {
+            // Define the order of top leagues
+            const topLeaguesOrder = [
+              'premier-league',     // England 1st
+              'ligue-1',           // France 1st
+              'ligue-2',           // France 2nd
+              'bundesliga',        // Germany 1st
+              'bundesliga-2',      // Germany 2nd
+              'serie-a',           // Italy 1st
+              'serie-b',           // Italy 2nd
+              'eredivisie',        // Netherlands 1st
+              'eerste-divisie',    // Netherlands 2nd
+              'liga-portugal',     // Portugal 1st
+              'la-liga',           // Spain 1st
+              'segunda-division',  // Spain 2nd
+            ];
+            
+            // Get all league entries
+            const allEntries = Object.entries(LEAGUES);
+            
+            // Separate top leagues from others
+            const topLeagues = topLeaguesOrder
+              .map(id => allEntries.find(([leagueId]) => leagueId === id))
+              .filter((entry): entry is [string, typeof LEAGUES[keyof typeof LEAGUES]] => entry !== undefined);
+            
+            // Helper function to determine division level
+            const getDivisionLevel = (name: string): number => {
+              // Check for explicit division indicators
+              if (name.includes('Premier') || name.includes('Super') || name.includes('Primera A') || 
+                  name.includes('Série A') || name.includes('Liga 1') || name.includes('K League 1') ||
+                  name.includes('J1') || name.includes('Ekstraklasa') || name.includes('Allsvenskan') ||
+                  name.includes('Eliteserien') || name.includes('Premiership') || name.includes('Liga MX') ||
+                  name.includes('Botola') || name.includes('Fortuna Liga') || name.includes('PrvaLiga') ||
+                  name.includes('SuperLiga') || name.includes('Süper Lig') || name.includes('Liga I')) {
+                return 1; // First division
               }
-              
-              // One is top league - top league comes first
-              if (aIsTop) return -1;
-              if (bIsTop) return 1;
-              
-              // Both are not top leagues - sort alphabetically by country then name
-              const countryCompare = a[1].country.localeCompare(b[1].country);
-              if (countryCompare !== 0) return countryCompare;
-              return a[1].name.localeCompare(b[1].name);
-            })
-            .map(([leagueId, league]) => (
+              if (name.includes('2') || name.includes('Second') || name.includes('Challenge') || 
+                  name.includes('Primera B') || name.includes('Nacional') || name.includes('Série B') ||
+                  name.includes('League One') || name.includes('1st Division') || name.includes('First Division') ||
+                  name.includes('Expansión') || name.includes('Superettan') || name.includes('OBOS') ||
+                  name.includes('Championship') || name.includes('1. Lig')) {
+                return 2; // Second division
+              }
+              return 1; // Default to first division if unclear
+            };
+            
+            // Get remaining leagues (not in top leagues)
+            const otherLeagues = allEntries
+              .filter(([leagueId]) => !topLeaguesOrder.includes(leagueId))
+              .sort((a, b) => {
+                // Sort alphabetically by country first
+                const countryCompare = a[1].country.localeCompare(b[1].country);
+                if (countryCompare !== 0) return countryCompare;
+                
+                // Within same country, sort by division level (1st before 2nd)
+                const aDivision = getDivisionLevel(a[1].name);
+                const bDivision = getDivisionLevel(b[1].name);
+                if (aDivision !== bDivision) return aDivision - bDivision;
+                
+                // Same division level, sort by name
+                return a[1].name.localeCompare(b[1].name);
+              });
+            
+            // Combine top leagues first, then others
+            const combinedLeagues = [...topLeagues, ...otherLeagues];
+            console.log('League filter order:', combinedLeagues.map(([id, league]) => `${id}: ${league.name}`));
+            return combinedLeagues.map(([leagueId, league]) => (
               <DropdownMenuCheckboxItem
                 key={leagueId}
                 checked={selectedLeagues.includes(leagueId as LeagueId)}
@@ -107,7 +129,8 @@ export default function LeagueFilter({
                 <span className="mr-2">{league.flag}</span>
                 {league.name}
               </DropdownMenuCheckboxItem>
-            ))}
+            ));
+          })()}
         </DropdownMenuContent>
       </DropdownMenu>
       
