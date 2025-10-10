@@ -57,6 +57,7 @@ export default function LeagueFilter({
             // Define the order of top leagues
             const topLeaguesOrder = [
               'premier-league',     // England 1st
+              'championship-eng',   // England 2nd
               'ligue-1',           // France 1st
               'ligue-2',           // France 2nd
               'bundesliga',        // Germany 1st

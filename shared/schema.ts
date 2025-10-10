@@ -54,6 +54,7 @@ export const LEAGUES = {
   
   // England
   'premier-league': { name: 'Premier League', country: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', logoUrl: '/src/assets/leagues/premier-league.png' },
+  'championship-eng': { name: 'Championship', country: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', logoUrl: '/src/assets/leagues/championship-eng.png' },
   
   // France
   'ligue-1': { name: 'Ligue 1', country: 'France', flag: '🇫🇷', logoUrl: '/src/assets/leagues/ligue-1.png' },
