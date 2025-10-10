@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { type PlayerWithStreak, LEAGUES } from "@shared/schema";
-import { formatDate, formatFixtureDateTime, formatOdds } from "@shared/utils";
+import { formatDate, formatFixtureDateTime, formatOdds, formatNextFixture } from "@shared/utils";
 import { Clock, Target } from "lucide-react";
 
 interface PlayerListItemProps {
@@ -113,8 +113,8 @@ export default function PlayerListItem({ player, className }: PlayerListItemProp
           <div className="text-sm">
             <div className="font-medium break-words" data-testid={`text-next-fixture-${player.id}`}>
               {player.nextFixture.isHome 
-                ? `${player.clubName} vs ${player.nextFixture.opponent}`
-                : `${player.nextFixture.opponent} vs ${player.clubName}`
+                ? formatNextFixture(player.clubName, player.nextFixture.opponent)
+                : formatNextFixture(player.nextFixture.opponent, player.clubName)
               }
             </div>
             <div className="text-muted-foreground text-xs mt-1">
