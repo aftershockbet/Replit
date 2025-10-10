@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import StreakBadge from "./StreakBadge";
 import { type TeamWithStreak, LEAGUES } from "@shared/schema";
-import { formatFixtureDateTime, formatOdds, getBookmakerUrl } from "@shared/utils";
+import { formatFixtureDateTime, formatOdds, getBookmakerUrl, formatNextFixture } from "@shared/utils";
 import { Clock, ExternalLink, TrendingUp, ArrowLeftRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -95,8 +95,8 @@ export default function TeamListItem({ team, className }: TeamListItemProps) {
           <div className="text-sm">
             <div className="font-medium break-words" data-testid={`text-next-fixture-${team.id}`}>
               {team.nextFixture.isHome 
-                ? `${team.name} vs ${team.nextFixture.opponent}`
-                : `${team.nextFixture.opponent} vs ${team.name}`
+                ? formatNextFixture(team.name, team.nextFixture.opponent)
+                : formatNextFixture(team.nextFixture.opponent, team.name)
               }
             </div>
             <div className="text-muted-foreground text-xs mt-1">
