@@ -46,7 +46,7 @@ export function getBookmakerUrl(bookmakerName: string): string {
 
 export function capitalizeTeamName(name: string): string {
   return name
-    .split('-')
+    .split(/[-\s]+/)
     .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ');
 }
