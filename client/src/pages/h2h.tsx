@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Trophy } from "lucide-react";
 import { LEAGUES } from "@shared/schema";
+import { capitalizeTeamName } from "@shared/utils";
 
 interface H2HMatch {
   date: string;
@@ -19,9 +20,9 @@ export default function H2H() {
   const teamId = params.teamId || '';
   const opponentId = params.opponentId || '';
 
-  // Mock team names - in a real app these would come from an API
-  const teamName = teamId;
-  const opponentName = opponentId;
+  // Capitalize team names for display
+  const teamName = capitalizeTeamName(teamId);
+  const opponentName = capitalizeTeamName(opponentId);
 
   // Mock H2H data - in a real app this would come from an API
   // showing last 10 encounters (or fewer if not available)
@@ -179,12 +180,13 @@ export default function H2H() {
                       </div>
                       <div className="mt-2 text-sm">
                         <span className={match.homeTeam === teamName ? 'font-semibold' : ''}>
-                          {match.homeTeam}
+                          {capitalizeTeamName(match.homeTeam)}
+                        </span>
+                        <span className="mx-2">vs.</span>
+                        <span className={match.awayTeam === teamName ? 'font-semibold' : ''}>
+                          {capitalizeTeamName(match.awayTeam)}
                         </span>
                         <span className="mx-2 font-bold">{match.score}</span>
-                        <span className={match.awayTeam === teamName ? 'font-semibold' : ''}>
-                          {match.awayTeam}
-                        </span>
                       </div>
                       <div className="mt-1 text-xs text-muted-foreground">
                         {match.competition}
