@@ -107,28 +107,25 @@ export default function StreakBadge({ result, opponent, date, score, className, 
       </TooltipTrigger>
       <TooltipContent side="top" className="z-50">
         <div className="text-sm">
-          {opponent && teamName && typeof isHome !== 'undefined' && score ? (
+          {opponent && teamName && typeof isHome !== 'undefined' ? (
             <div>
               {isHome ? (
                 <>
                   <span className="font-bold">{capitalizeTeamName(teamName)}</span>
-                  <span> vs. {capitalizeTeamName(opponent)} {score}</span>
+                  <span> vs. {capitalizeTeamName(opponent)}</span>
+                  {score && <span> {score}</span>}
                 </>
               ) : (
                 <>
                   <span>{capitalizeTeamName(opponent)}</span>
-                  <span> vs. <span className="font-bold">{capitalizeTeamName(teamName)}</span> {score}</span>
+                  <span> vs. <span className="font-bold">{capitalizeTeamName(teamName)}</span></span>
+                  {score && <span> {score}</span>}
                 </>
               )}
             </div>
           ) : (
             <>
               <div className="font-medium">{getResultText(result, score)}</div>
-              {opponent && teamName && typeof isHome !== 'undefined' && (
-                <div>
-                  {isHome ? `${teamName} vs ${opponent}` : `${opponent} vs ${teamName}`}
-                </div>
-              )}
               {opponent && !teamName && <div>vs {opponent}</div>}
             </>
           )}
