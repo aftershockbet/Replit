@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link } from "wouter";
 import { type PlayerWithStreak, LEAGUES } from "@shared/schema";
-import { formatDate, formatFixtureDateTime, formatOdds } from "@shared/utils";
+import { formatDate, formatFixtureDateTime, formatOdds, formatNextFixture } from "@shared/utils";
 import { Clock, ExternalLink, TrendingUp, Target } from "lucide-react";
 import { parseISO } from "date-fns";
 
@@ -124,8 +124,8 @@ export default function PlayerCard({ player, className }: PlayerCardProps) {
             <div className="text-sm" data-testid={`text-next-fixture-${player.id}`}>
               <div className="font-medium break-words">
                 {player.nextFixture.isHome 
-                  ? `${player.clubName} vs ${player.nextFixture.opponent}`
-                  : `${player.nextFixture.opponent} vs ${player.clubName}`
+                  ? formatNextFixture(player.clubName, player.nextFixture.opponent)
+                  : formatNextFixture(player.nextFixture.opponent, player.clubName)
                 }
               </div>
               <div className="text-muted-foreground text-xs mt-1">
