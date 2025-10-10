@@ -56,7 +56,7 @@ export default function StreakAlerts({
   // Show bell icons
   const showFavoriteVictimBell = (activeTab === 'winning' || activeTab === 'drawing') && favoriteVictimMatches.length > 0;
   const showInvinciblesBell = activeTab === 'winning' && invinciblesAlerts.length > 0;
-  const showUnbreakablesBell = activeTab === 'drawing' && unbreakablesAlerts.length > 0;
+  const showUnbreakablesBell = (activeTab === 'winning' || activeTab === 'drawing') && unbreakablesAlerts.length > 0;
 
   return (
     <div className={`space-y-3 ${className}`} data-testid="streak-alerts-container">

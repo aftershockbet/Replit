@@ -114,7 +114,6 @@ export function useStreakAlerts(
   useEffect(() => {
     // Check for teams with 6-10 consecutive draws (Unbreakables)
     const unbreakables: UnbreakablesAlert[] = teams
-      .filter(team => team.streakType === 'drawing')
       .map(team => {
         // Count consecutive draws from recent matches
         let consecutiveDraws = 0;
