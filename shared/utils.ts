@@ -47,7 +47,14 @@ export function getBookmakerUrl(bookmakerName: string): string {
 export function capitalizeTeamName(name: string): string {
   return name
     .split(/[-\s]+/)
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .map(word => {
+      const lower = word.toLowerCase();
+      // Preserve FC and FCSB in uppercase
+      if (lower === 'fc' || lower === 'fcsb') {
+        return word.toUpperCase();
+      }
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
     .join(' ');
 }
 
