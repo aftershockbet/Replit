@@ -208,13 +208,13 @@ export default function StreakAlerts({
         return (
           <Alert 
             key={alert.player.id} 
-            className="border-amber-500 bg-amber-500/10"
+            className="border-[#e74c3c] bg-[#e74c3c]/10"
             data-testid={`alert-favorite-victim-${alert.player.id}`}
           >
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
-                  <Crosshair className="h-5 w-5 text-amber-500" />
+                  <Crosshair className="h-5 w-5 text-[#e74c3c]" />
                   <AlertTitle className="mb-0">Favorite Victim Alert!</AlertTitle>
                 </div>
                 <AlertDescription>
