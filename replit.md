@@ -10,11 +10,28 @@ The application uses a modern sports app design aesthetic with dark theme by def
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes (October 2025)
+
+### League Filter Enhancements
+- **Top Leagues Ordering**: Implemented explicit ordering for top 12 elite leagues (England, France, Germany, Italy, Netherlands, Portugal, Spain) with 1st and 2nd divisions prioritized
+- **Smart Sorting**: Added division-level detection for alphabetically sorted leagues - 1st divisions now appear before 2nd divisions within each country
+- **League Corrections**: Fixed league IDs (liga-portugal, segunda-division) and names (Colombia now shows "Primera A"/"Primera B" without "Categoría" prefix)
+- **Belgium Leagues**: Added Jupiter Pro League (1st division) and Challenger Pro League (2nd division)
+
+### Head-to-Head Features
+- **H2H Page**: Created dedicated head-to-head page showing last 10 encounters between teams in the same competition
+- **Navigation**: H2H button positioned next to Next Fixture section for intuitive access
+- **Match History**: Displays complete match history including dates, scores, and results
+
+### Visual Enhancements
+- **Custom Goalscorer Icon**: Replaced default tab icon with custom image (goalscorer-icon.png)
+- **Country Flags**: All leagues display with country flags only (no league logos) for consistency
+
 ## System Architecture
 
 ### Frontend Architecture
 - **Framework**: React with TypeScript for type safety and modern development
-- **Routing**: Wouter for lightweight client-side routing
+- **Routing**: Wouter for lightweight client-side routing with dedicated H2H match history page
 - **State Management**: TanStack Query (React Query) for server state management and caching
 - **UI Components**: shadcn/ui component library built on Radix UI primitives
 - **Styling**: Tailwind CSS with custom design system optimized for sports apps

@@ -117,9 +117,7 @@ export default function LeagueFilter({
               });
             
             // Combine top leagues first, then others
-            const combinedLeagues = [...topLeagues, ...otherLeagues];
-            console.log('League filter order:', combinedLeagues.map(([id, league]) => `${id}: ${league.name}`));
-            return combinedLeagues.map(([leagueId, league]) => (
+            return [...topLeagues, ...otherLeagues].map(([leagueId, league]) => (
               <DropdownMenuCheckboxItem
                 key={leagueId}
                 checked={selectedLeagues.includes(leagueId as LeagueId)}
