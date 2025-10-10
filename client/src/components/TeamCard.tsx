@@ -38,6 +38,10 @@ export default function TeamCard({ team, className }: TeamCardProps) {
   const showInvinciblesCount = consecutiveWins >= 6 && consecutiveWins <= 10;
   const showUnbreakablesCount = consecutiveDraws >= 6 && consecutiveDraws <= 10;
   
+  // Determine how many badges to show
+  const badgesToShow = showInvinciblesCount ? consecutiveWins : 
+                       showUnbreakablesCount ? consecutiveDraws : 5;
+  
   // Get border color based on streak type
   const getBorderColor = () => {
     if (team.streakType === 'winning') return 'border-[#40af0f] bg-[#40af0f]/5';
@@ -80,8 +84,8 @@ export default function TeamCard({ team, className }: TeamCardProps) {
             </Link>
           </div>
           
-          <div className="flex gap-1 justify-center" data-testid={`streak-pattern-${team.id}`}>
-            {team.recentMatches.slice(0, 5).map((match, index) => (
+          <div className="flex gap-1 justify-center flex-wrap" data-testid={`streak-pattern-${team.id}`}>
+            {team.recentMatches.slice(0, badgesToShow).map((match, index) => (
               <StreakBadge 
                 key={index} 
                 result={match.result}
@@ -94,30 +98,6 @@ export default function TeamCard({ team, className }: TeamCardProps) {
               />
             ))}
           </div>
-          
-          {/* Invincibles Alert - Show consecutive wins count */}
-          {showInvinciblesCount && (
-            <div className="text-center mt-2" data-testid={`invincibles-count-${team.id}`}>
-              <span className="text-xs font-semibold" style={{ color: '#40af0f' }}>
-                {Array(consecutiveWins).fill('W').join('-')}
-              </span>
-              <span className="text-xs text-muted-foreground ml-2">
-                ({consecutiveWins} consecutive wins)
-              </span>
-            </div>
-          )}
-          
-          {/* Unbreakables Alert - Show consecutive draws count */}
-          {showUnbreakablesCount && (
-            <div className="text-center mt-2" data-testid={`unbreakables-count-${team.id}`}>
-              <span className="text-xs font-semibold" style={{ color: '#efb609' }}>
-                {Array(consecutiveDraws).fill('D').join('-')}
-              </span>
-              <span className="text-xs text-muted-foreground ml-2">
-                ({consecutiveDraws} consecutive draws)
-              </span>
-            </div>
-          )}
         </div>
         
         {/* Next Fixture with Betting Odds */}

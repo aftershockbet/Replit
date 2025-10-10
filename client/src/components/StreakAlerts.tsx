@@ -155,12 +155,12 @@ export default function StreakAlerts({
           variant="outline"
           size="sm"
           onClick={onNavigateToGoalscorers}
-          className="border-amber-500 bg-amber-500/10 hover:bg-amber-500/20 text-foreground relative"
+          className="border-[#e74c3c] bg-[#e74c3c]/10 hover:bg-[#e74c3c]/20 text-foreground relative"
           data-testid="button-favorite-victim-bell"
         >
-          <Bell className="h-5 w-5 text-amber-500 mr-2" />
+          <Bell className="h-5 w-5 text-[#e74c3c] mr-2" />
           <span>Favorite Victim Alerts</span>
-          <Badge variant="default" className="ml-2 bg-amber-500 text-white">
+          <Badge variant="default" className="ml-2 bg-[#e74c3c] text-white">
             {favoriteVictimMatches.length}
           </Badge>
         </Button>
