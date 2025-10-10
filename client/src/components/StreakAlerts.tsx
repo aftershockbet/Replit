@@ -10,13 +10,26 @@ interface FavoriteVictimAlert {
   goalsScored: number;
 }
 
+interface InvinciblesAlert {
+  team: TeamWithStreak;
+  consecutiveWins: number;
+}
+
+interface UnbreakablesAlert {
+  team: TeamWithStreak;
+  consecutiveDraws: number;
+}
+
 interface StreakAlertsProps {
   newTeams: TeamWithStreak[];
   newPlayers: PlayerWithStreak[];
   favoriteVictimMatches?: FavoriteVictimAlert[];
+  invinciblesAlerts?: InvinciblesAlert[];
+  unbreakablesAlerts?: UnbreakablesAlert[];
   onDismissTeam: (teamId: string) => void;
   onDismissPlayer: (playerId: string) => void;
   onDismissFavoriteVictim?: (playerId: string) => void;
+  onNavigateToTeam?: (teamId: string) => void;
   activeTab: StreakType;
   onNavigateToGoalscorers?: () => void;
   className?: string;
@@ -26,19 +39,24 @@ export default function StreakAlerts({
   newTeams,
   newPlayers,
   favoriteVictimMatches = [],
+  invinciblesAlerts = [],
+  unbreakablesAlerts = [],
   onDismissTeam,
   onDismissPlayer,
   onDismissFavoriteVictim,
+  onNavigateToTeam,
   activeTab,
   onNavigateToGoalscorers,
   className
 }: StreakAlertsProps) {
-  if (newTeams.length === 0 && newPlayers.length === 0 && favoriteVictimMatches.length === 0) {
+  if (newTeams.length === 0 && newPlayers.length === 0 && favoriteVictimMatches.length === 0 && invinciblesAlerts.length === 0 && unbreakablesAlerts.length === 0) {
     return null;
   }
 
-  // Show bell icon on Winning/Drawing tabs, full alerts on Goalscorers tab
-  const showBellIcon = (activeTab === 'winning' || activeTab === 'drawing') && favoriteVictimMatches.length > 0;
+  // Show bell icons
+  const showFavoriteVictimBell = (activeTab === 'winning' || activeTab === 'drawing') && favoriteVictimMatches.length > 0;
+  const showInvinciblesBell = activeTab === 'winning' && invinciblesAlerts.length > 0;
+  const showUnbreakablesBell = activeTab === 'drawing' && unbreakablesAlerts.length > 0;
 
   return (
     <div className={`space-y-3 ${className}`} data-testid="streak-alerts-container">
@@ -132,7 +150,7 @@ export default function StreakAlerts({
       })}
 
       {/* Favorite Victim Alerts - Bell Icon on Winning/Drawing */}
-      {showBellIcon && (
+      {showFavoriteVictimBell && (
         <Button
           variant="outline"
           size="sm"
@@ -147,6 +165,42 @@ export default function StreakAlerts({
           </Badge>
         </Button>
       )}
+
+      {/* Invincibles Alerts - Bell Icon on Winning Tab */}
+      {showInvinciblesBell && invinciblesAlerts.map((alert) => (
+        <Button
+          key={alert.team.id}
+          variant="outline"
+          size="sm"
+          onClick={() => onNavigateToTeam?.(alert.team.id)}
+          className="border-[#40af0f] bg-[#40af0f]/10 hover:bg-[#40af0f]/20 text-foreground relative"
+          data-testid={`button-invincibles-${alert.team.id}`}
+        >
+          <Bell className="h-5 w-5 text-[#40af0f] mr-2" />
+          <span>Invincibles Alert: {alert.team.name}</span>
+          <Badge variant="default" className="ml-2 bg-[#40af0f] text-white">
+            {alert.consecutiveWins} wins
+          </Badge>
+        </Button>
+      ))}
+
+      {/* Unbreakables Alerts - Bell Icon on Drawing Tab */}
+      {showUnbreakablesBell && unbreakablesAlerts.map((alert) => (
+        <Button
+          key={alert.team.id}
+          variant="outline"
+          size="sm"
+          onClick={() => onNavigateToTeam?.(alert.team.id)}
+          className="border-[#efb609] bg-[#efb609]/10 hover:bg-[#efb609]/20 text-foreground relative"
+          data-testid={`button-unbreakables-${alert.team.id}`}
+        >
+          <Bell className="h-5 w-5 text-[#efb609] mr-2" />
+          <span>Unbreakables Alert: {alert.team.name}</span>
+          <Badge variant="default" className="ml-2 bg-[#efb609] text-white">
+            {alert.consecutiveDraws} draws
+          </Badge>
+        </Button>
+      ))}
 
       {/* Favorite Victim Alerts - Full Cards on Goalscorers Tab */}
       {activeTab === 'goalscorers' && favoriteVictimMatches.map((alert) => {

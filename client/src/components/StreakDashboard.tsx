@@ -226,8 +226,15 @@ export default function StreakDashboard({
           newTeams={displayedNewTeams}
           newPlayers={displayedNewPlayers}
           favoriteVictimMatches={alerts.favoriteVictimMatches}
+          invinciblesAlerts={alerts.invinciblesAlerts}
+          unbreakablesAlerts={alerts.unbreakablesAlerts}
           onDismissTeam={handleDismissTeamAlert}
           onDismissPlayer={handleDismissPlayerAlert}
+          onNavigateToTeam={(teamId) => {
+            // Scroll to team card
+            const element = document.querySelector(`[data-testid="card-team-${teamId}"], [data-testid="list-item-team-${teamId}"]`);
+            element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }}
           activeTab={activeTab}
           onNavigateToGoalscorers={() => setActiveTab('goalscorers')}
           className="mb-6"

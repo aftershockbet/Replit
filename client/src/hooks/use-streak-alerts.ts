@@ -7,10 +7,22 @@ interface FavoriteVictimAlert {
   goalsScored: number;
 }
 
+interface InvinciblesAlert {
+  team: TeamWithStreak;
+  consecutiveWins: number;
+}
+
+interface UnbreakablesAlert {
+  team: TeamWithStreak;
+  consecutiveDraws: number;
+}
+
 interface StreakAlerts {
   newTeams: TeamWithStreak[];
   newPlayers: PlayerWithStreak[];
   favoriteVictimMatches: FavoriteVictimAlert[];
+  invinciblesAlerts: InvinciblesAlert[];
+  unbreakablesAlerts: UnbreakablesAlert[];
 }
 
 const STORAGE_KEY_TEAMS = 'elite-streaks-seen-teams';
@@ -23,6 +35,8 @@ export function useStreakAlerts(
   const [newTeams, setNewTeams] = useState<TeamWithStreak[]>([]);
   const [newPlayers, setNewPlayers] = useState<PlayerWithStreak[]>([]);
   const [favoriteVictimMatches, setFavoriteVictimMatches] = useState<FavoriteVictimAlert[]>([]);
+  const [invinciblesAlerts, setInvinciblesAlerts] = useState<InvinciblesAlert[]>([]);
+  const [unbreakablesAlerts, setUnbreakablesAlerts] = useState<UnbreakablesAlert[]>([]);
 
   useEffect(() => {
     // Get previously seen team IDs from localStorage
@@ -76,7 +90,49 @@ export function useStreakAlerts(
     setFavoriteVictimMatches(victimAlerts);
   }, [players]);
 
-  return { newTeams, newPlayers, favoriteVictimMatches };
+  useEffect(() => {
+    // Check for teams with 6-10 consecutive wins (Invincibles)
+    const invincibles: InvinciblesAlert[] = teams
+      .filter(team => team.streakType === 'winning')
+      .map(team => {
+        // Count consecutive wins from recent matches
+        let consecutiveWins = 0;
+        for (const match of team.recentMatches) {
+          if (match.result === 'W') {
+            consecutiveWins++;
+          } else {
+            break;
+          }
+        }
+        return { team, consecutiveWins };
+      })
+      .filter(alert => alert.consecutiveWins >= 6 && alert.consecutiveWins <= 10);
+    
+    setInvinciblesAlerts(invincibles);
+  }, [teams]);
+
+  useEffect(() => {
+    // Check for teams with 6-10 consecutive draws (Unbreakables)
+    const unbreakables: UnbreakablesAlert[] = teams
+      .filter(team => team.streakType === 'drawing')
+      .map(team => {
+        // Count consecutive draws from recent matches
+        let consecutiveDraws = 0;
+        for (const match of team.recentMatches) {
+          if (match.result === 'D') {
+            consecutiveDraws++;
+          } else {
+            break;
+          }
+        }
+        return { team, consecutiveDraws };
+      })
+      .filter(alert => alert.consecutiveDraws >= 6 && alert.consecutiveDraws <= 10);
+    
+    setUnbreakablesAlerts(unbreakables);
+  }, [teams]);
+
+  return { newTeams, newPlayers, favoriteVictimMatches, invinciblesAlerts, unbreakablesAlerts };
 }
 
 export function dismissTeamAlert(teamId: string, newTeams: TeamWithStreak[]): TeamWithStreak[] {

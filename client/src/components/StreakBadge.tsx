@@ -41,6 +41,14 @@ export default function StreakBadge({ result, opponent, date, score, className, 
     }
   };
 
+  // Capitalize team names properly
+  const capitalizeTeamName = (name: string) => {
+    return name
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
+
   const getResultText = (result: MatchResult, score?: string) => {
     if (score) {
       switch (result) {
@@ -99,13 +107,31 @@ export default function StreakBadge({ result, opponent, date, score, className, 
       </TooltipTrigger>
       <TooltipContent side="top" className="z-50">
         <div className="text-sm">
-          <div className="font-medium">{getResultText(result, score)}</div>
-          {opponent && teamName && typeof isHome !== 'undefined' && (
+          {opponent && teamName && typeof isHome !== 'undefined' && score ? (
             <div>
-              {isHome ? `${teamName} vs ${opponent}` : `${opponent} vs ${teamName}`}
+              {isHome ? (
+                <>
+                  <span className="font-bold">{capitalizeTeamName(teamName)}</span>
+                  <span> vs. {capitalizeTeamName(opponent)} {score}</span>
+                </>
+              ) : (
+                <>
+                  <span>{capitalizeTeamName(opponent)}</span>
+                  <span> vs. <span className="font-bold">{capitalizeTeamName(teamName)}</span> {score}</span>
+                </>
+              )}
             </div>
+          ) : (
+            <>
+              <div className="font-medium">{getResultText(result, score)}</div>
+              {opponent && teamName && typeof isHome !== 'undefined' && (
+                <div>
+                  {isHome ? `${teamName} vs ${opponent}` : `${opponent} vs ${teamName}`}
+                </div>
+              )}
+              {opponent && !teamName && <div>vs {opponent}</div>}
+            </>
           )}
-          {opponent && !teamName && <div>vs {opponent}</div>}
           {date && <div className="text-muted-foreground">{formatDate(date)}</div>}
         </div>
       </TooltipContent>
