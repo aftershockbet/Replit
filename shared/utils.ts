@@ -56,6 +56,10 @@ export function shortenTeamName(name: string): string {
     'paris-saint-germain': 'PSG',
     'paris saint-germain': 'PSG',
     'paris saint germain': 'PSG',
+    'football club steaua bucharesti': 'FCSB',
+    'football-club-steaua-bucharesti': 'FCSB',
+    'athletic bilbao': 'Ath. Bilbao',
+    'athletic-bilbao': 'Ath. Bilbao',
     'manchester-city': 'Man. City',
     'manchester city': 'Man. City',
     'manchester-united': 'Man. United',
@@ -83,7 +87,19 @@ export function shortenTeamName(name: string): string {
   };
   
   const normalized = name.toLowerCase();
-  return shortenings[normalized] || capitalizeTeamName(name);
+  
+  // Check for specific shortenings first
+  if (shortenings[normalized]) {
+    return shortenings[normalized];
+  }
+  
+  // Handle "Football Club" → "FC" pattern
+  const capitalized = capitalizeTeamName(name);
+  if (capitalized.startsWith('Football Club ')) {
+    return capitalized.replace('Football Club ', 'FC ');
+  }
+  
+  return capitalized;
 }
 
 export function formatNextFixture(homeTeam: string, awayTeam: string): string {
