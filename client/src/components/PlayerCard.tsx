@@ -144,17 +144,17 @@ export default function PlayerCard({ player, className }: PlayerCardProps) {
                 </div>
                 <div className="flex flex-wrap gap-2 text-xs" data-testid={`goalscorer-odds-${player.id}`}>
                   {player.nextFixture.odds.firstGoalscorer && (
-                    <Badge variant="secondary" className="px-2 py-1 text-xs">
+                    <Badge variant="outline" className="px-2 py-1 text-xs">
                       1st Goal {formatOdds(player.nextFixture.odds.firstGoalscorer)}
                     </Badge>
                   )}
                   {player.nextFixture.odds.anytimeGoalscorer && (
-                    <Badge variant="secondary" className="px-2 py-1 text-xs">
+                    <Badge variant="outline" className="px-2 py-1 text-xs">
                       Anytime {formatOdds(player.nextFixture.odds.anytimeGoalscorer)}
                     </Badge>
                   )}
                   {player.nextFixture.odds.twoOrMoreGoals && (
-                    <Badge variant="secondary" className="px-2 py-1 text-xs">
+                    <Badge variant="outline" className="px-2 py-1 text-xs">
                       2+ Goals {formatOdds(player.nextFixture.odds.twoOrMoreGoals)}
                     </Badge>
                   )}

@@ -117,34 +117,34 @@ export default function TeamListItem({ team, className }: TeamListItemProps) {
             <div className="flex flex-wrap gap-2">
               {hasValidBookmakerUrl ? (
                 <a href={bookmakerUrl} target="_blank" rel="noopener noreferrer">
-                  <Badge variant="secondary" className="px-2 py-1 text-xs cursor-pointer">
+                  <Badge variant="outline" className="px-2 py-1 text-xs cursor-pointer">
                     (1) {formatOdds(team.nextFixture.odds.win)}
                   </Badge>
                 </a>
               ) : (
-                <Badge variant="secondary" className="px-2 py-1 text-xs">
+                <Badge variant="outline" className="px-2 py-1 text-xs">
                   (1) {formatOdds(team.nextFixture.odds.win)}
                 </Badge>
               )}
               {hasValidBookmakerUrl ? (
                 <a href={bookmakerUrl} target="_blank" rel="noopener noreferrer">
-                  <Badge variant="secondary" className="px-2 py-1 text-xs cursor-pointer">
+                  <Badge variant="outline" className="px-2 py-1 text-xs cursor-pointer">
                     (X) {formatOdds(team.nextFixture.odds.draw)}
                   </Badge>
                 </a>
               ) : (
-                <Badge variant="secondary" className="px-2 py-1 text-xs">
+                <Badge variant="outline" className="px-2 py-1 text-xs">
                   (X) {formatOdds(team.nextFixture.odds.draw)}
                 </Badge>
               )}
               {hasValidBookmakerUrl ? (
                 <a href={bookmakerUrl} target="_blank" rel="noopener noreferrer">
-                  <Badge variant="secondary" className="px-2 py-1 text-xs cursor-pointer">
+                  <Badge variant="outline" className="px-2 py-1 text-xs cursor-pointer">
                     (2) {formatOdds(team.nextFixture.odds.loss)}
                   </Badge>
                 </a>
               ) : (
-                <Badge variant="secondary" className="px-2 py-1 text-xs">
+                <Badge variant="outline" className="px-2 py-1 text-xs">
                   (2) {formatOdds(team.nextFixture.odds.loss)}
                 </Badge>
               )}
