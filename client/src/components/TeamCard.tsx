@@ -148,12 +148,12 @@ export default function TeamCard({ team, className }: TeamCardProps) {
                     rel="noopener noreferrer"
                     data-testid={`link-odds-win-${team.id}`}
                   >
-                    <Badge variant="secondary" className="px-2 py-1 text-xs cursor-pointer">
+                    <Badge variant="outline" className="px-2 py-1 text-xs cursor-pointer">
                       (1) {formatOdds(team.nextFixture.odds.win)}
                     </Badge>
                   </a>
                 ) : (
-                  <Badge variant="secondary" className="px-2 py-1 text-xs" data-testid={`badge-odds-win-${team.id}`}>
+                  <Badge variant="outline" className="px-2 py-1 text-xs" data-testid={`badge-odds-win-${team.id}`}>
                     (1) {formatOdds(team.nextFixture.odds.win)}
                   </Badge>
                 )}
@@ -164,12 +164,12 @@ export default function TeamCard({ team, className }: TeamCardProps) {
                     rel="noopener noreferrer"
                     data-testid={`link-odds-draw-${team.id}`}
                   >
-                    <Badge variant="secondary" className="px-2 py-1 text-xs cursor-pointer">
+                    <Badge variant="outline" className="px-2 py-1 text-xs cursor-pointer">
                       (X) {formatOdds(team.nextFixture.odds.draw)}
                     </Badge>
                   </a>
                 ) : (
-                  <Badge variant="secondary" className="px-2 py-1 text-xs" data-testid={`badge-odds-draw-${team.id}`}>
+                  <Badge variant="outline" className="px-2 py-1 text-xs" data-testid={`badge-odds-draw-${team.id}`}>
                     (X) {formatOdds(team.nextFixture.odds.draw)}
                   </Badge>
                 )}
@@ -180,12 +180,12 @@ export default function TeamCard({ team, className }: TeamCardProps) {
                     rel="noopener noreferrer"
                     data-testid={`link-odds-loss-${team.id}`}
                   >
-                    <Badge variant="secondary" className="px-2 py-1 text-xs cursor-pointer">
+                    <Badge variant="outline" className="px-2 py-1 text-xs cursor-pointer">
                       (2) {formatOdds(team.nextFixture.odds.loss)}
                     </Badge>
                   </a>
                 ) : (
-                  <Badge variant="secondary" className="px-2 py-1 text-xs" data-testid={`badge-odds-loss-${team.id}`}>
+                  <Badge variant="outline" className="px-2 py-1 text-xs" data-testid={`badge-odds-loss-${team.id}`}>
                     (2) {formatOdds(team.nextFixture.odds.loss)}
                   </Badge>
                 )}
@@ -202,12 +202,12 @@ export default function TeamCard({ team, className }: TeamCardProps) {
                         rel="noopener noreferrer"
                         data-testid={`link-odds-1x-${team.id}`}
                       >
-                        <Badge variant="secondary" className="px-2 py-1 text-xs cursor-pointer">
+                        <Badge variant="outline" className="px-2 py-1 text-xs cursor-pointer">
                           (1X) {formatOdds(team.nextFixture.odds.doubleChance1X)}
                         </Badge>
                       </a>
                     ) : (
-                      <Badge variant="secondary" className="px-2 py-1 text-xs" data-testid={`badge-odds-1x-${team.id}`}>
+                      <Badge variant="outline" className="px-2 py-1 text-xs" data-testid={`badge-odds-1x-${team.id}`}>
                         (1X) {formatOdds(team.nextFixture.odds.doubleChance1X)}
                       </Badge>
                     )
@@ -220,12 +220,12 @@ export default function TeamCard({ team, className }: TeamCardProps) {
                         rel="noopener noreferrer"
                         data-testid={`link-odds-12-${team.id}`}
                       >
-                        <Badge variant="secondary" className="px-2 py-1 text-xs cursor-pointer">
+                        <Badge variant="outline" className="px-2 py-1 text-xs cursor-pointer">
                           (12) {formatOdds(team.nextFixture.odds.doubleChance12)}
                         </Badge>
                       </a>
                     ) : (
-                      <Badge variant="secondary" className="px-2 py-1 text-xs" data-testid={`badge-odds-12-${team.id}`}>
+                      <Badge variant="outline" className="px-2 py-1 text-xs" data-testid={`badge-odds-12-${team.id}`}>
                         (12) {formatOdds(team.nextFixture.odds.doubleChance12)}
                       </Badge>
                     )
@@ -238,12 +238,12 @@ export default function TeamCard({ team, className }: TeamCardProps) {
                         rel="noopener noreferrer"
                         data-testid={`link-odds-x2-${team.id}`}
                       >
-                        <Badge variant="secondary" className="px-2 py-1 text-xs cursor-pointer">
+                        <Badge variant="outline" className="px-2 py-1 text-xs cursor-pointer">
                           (X2) {formatOdds(team.nextFixture.odds.doubleChanceX2)}
                         </Badge>
                       </a>
                     ) : (
-                      <Badge variant="secondary" className="px-2 py-1 text-xs" data-testid={`badge-odds-x2-${team.id}`}>
+                      <Badge variant="outline" className="px-2 py-1 text-xs" data-testid={`badge-odds-x2-${team.id}`}>
                         (X2) {formatOdds(team.nextFixture.odds.doubleChanceX2)}
                       </Badge>
                     )
