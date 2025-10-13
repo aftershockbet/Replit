@@ -86,6 +86,12 @@ export default {
           draw: "hsl(var(--chart-3) / <alpha-value>)",
           loss: "hsl(var(--chart-2) / <alpha-value>)",
         },
+        badge: {
+          outline: "var(--badge-outline)",
+        },
+        button: {
+          outline: "var(--button-outline)",
+        },
       },
       fontFamily: {
         sans: ["Inter", "var(--font-sans)"],
