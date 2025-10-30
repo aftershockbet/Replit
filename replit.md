@@ -12,6 +12,14 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (October 2025)
 
+### ML-Based Forecasting (Latest)
+- **Prediction Engine**: Implemented machine learning model using scikit-learn Logistic Regression to predict streak continuation
+- **Feature Engineering**: Extracts 6+ features including streak length, win/loss margins, days since last event, historical longest streak, home/away influence, and league position
+- **API Endpoints**: Added `/api/predict/team` and `/api/predict/player` for real-time ML predictions
+- **UI Integration**: All team and player components (cards and list views) now display confidence scores with Sparkles icon
+- **Confidence Display**: Shows percentage likelihood of streak continuation (e.g., "75% Continue" or "30% Break")
+- **Python Service**: Backend ML service at `server/ml/streak_predictor.py` handles model training and predictions
+
 ### League Filter Enhancements
 - **Top Leagues Ordering**: Implemented explicit ordering for top 12 elite leagues (England, France, Germany, Italy, Netherlands, Portugal, Spain) with 1st and 2nd divisions prioritized
 - **Smart Sorting**: Added division-level detection for alphabetically sorted leagues - 1st divisions now appear before 2nd divisions within each country
@@ -42,6 +50,10 @@ Preferred communication style: Simple, everyday language.
 - **Data Layer**: Drizzle ORM with PostgreSQL for type-safe database operations
 - **Storage Interface**: Abstracted storage layer with in-memory implementation for development
 - **API Design**: RESTful endpoints with `/api` prefix for clear separation
+- **ML Service**: Python-based machine learning service using scikit-learn for streak prediction
+  - **Model**: Logistic Regression classifier with synthetic training data
+  - **Features**: Streak length, margins, time decay, home/away, league position
+  - **Endpoints**: `/api/predict/team` and `/api/predict/player` for real-time predictions
 
 ### Design System
 - **Theme**: Dark-first design with system-based approach inspired by ESPN and The Athletic
