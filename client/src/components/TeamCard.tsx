@@ -3,10 +3,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import StreakBadge from "./StreakBadge";
-import { type TeamWithStreak, LEAGUES } from "@shared/schema";
+import { type TeamWithStreak, LEAGUES, type StreakPrediction } from "@shared/schema";
 import { formatFixtureDateTime, formatOdds, getBookmakerUrl, formatNextFixture } from "@shared/utils";
-import { Clock, ExternalLink, TrendingUp, ArrowLeftRight } from "lucide-react";
+import { Clock, ExternalLink, TrendingUp, ArrowLeftRight, Sparkles } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useQuery } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 
 interface TeamCardProps {
   team: TeamWithStreak;
@@ -19,6 +21,21 @@ export default function TeamCard({ team, className }: TeamCardProps) {
   const bookmakerUrl = getBookmakerUrl(team.nextFixture.odds.bookmaker);
   const hasValidBookmakerUrl = bookmakerUrl !== '#';
   const isMobile = useIsMobile();
+  
+  const { data: prediction } = useQuery<StreakPrediction>({
+    queryKey: ['/api/predict/team', team.id],
+    queryFn: async () => {
+      const response = await fetch('/api/predict/team', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(team),
+      });
+      if (!response.ok) throw new Error('Prediction failed');
+      return response.json();
+    },
+    staleTime: 1000 * 60 * 30,
+    retry: false,
+  });
   
   // Calculate consecutive wins/draws for Invincibles/Unbreakables alerts
   const calculateConsecutiveCount = (resultType: 'W' | 'D') => {
@@ -99,6 +116,29 @@ export default function TeamCard({ team, className }: TeamCardProps) {
             ))}
           </div>
         </div>
+        
+        {prediction && (
+          <div className="space-y-2">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Sparkles className="h-4 w-4" />
+                <span>ML Forecast</span>
+              </div>
+              <Badge 
+                variant={prediction.confidenceScore >= 60 ? "default" : "secondary"}
+                className="text-xs font-semibold"
+                data-testid={`badge-prediction-${team.id}`}
+              >
+                {prediction.confidenceScore}% {prediction.prediction === 'continue' ? 'Continue' : 'Break'}
+              </Badge>
+            </div>
+            <div className="text-xs text-muted-foreground">
+              {prediction.prediction === 'continue' 
+                ? `${prediction.confidenceScore}% chance the streak continues` 
+                : `${prediction.confidenceScore}% chance the streak breaks`}
+            </div>
+          </div>
+        )}
         
         {/* Next Fixture with Betting Odds */}
         <div className="border-t pt-3 space-y-3">

@@ -1,8 +1,9 @@
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { type PlayerWithStreak, LEAGUES } from "@shared/schema";
+import { type PlayerWithStreak, LEAGUES, type StreakPrediction } from "@shared/schema";
 import { formatDate, formatFixtureDateTime, formatOdds, formatNextFixture } from "@shared/utils";
-import { Clock, Target } from "lucide-react";
+import { Clock, Target, Sparkles } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 
 interface PlayerListItemProps {
   player: PlayerWithStreak;
@@ -12,6 +13,21 @@ interface PlayerListItemProps {
 export default function PlayerListItem({ player, className }: PlayerListItemProps) {
   const league = LEAGUES[player.leagueId];
   const { date: fixtureDate, time: fixtureTime } = formatFixtureDateTime(player.nextFixture.date);
+  
+  const { data: prediction } = useQuery<StreakPrediction>({
+    queryKey: ['/api/predict/player', player.id],
+    queryFn: async () => {
+      const response = await fetch('/api/predict/player', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(player),
+      });
+      if (!response.ok) throw new Error('Prediction failed');
+      return response.json();
+    },
+    staleTime: 1000 * 60 * 30,
+    retry: false,
+  });
   
   const getPositionColor = (position: string) => {
     switch (position) {
@@ -93,6 +109,22 @@ export default function PlayerListItem({ player, className }: PlayerListItemProp
             ))}
           </div>
         </div>
+
+        {prediction && (
+          <div className="flex items-center justify-between gap-2 border-t pt-3">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Sparkles className="h-4 w-4" />
+              <span>ML Forecast</span>
+            </div>
+            <Badge 
+              variant={prediction.confidenceScore >= 60 ? "default" : "secondary"}
+              className="text-xs font-semibold"
+              data-testid={`badge-prediction-${player.id}`}
+            >
+              {prediction.confidenceScore}% {prediction.prediction === 'continue' ? 'Scores' : 'Blank'}
+            </Badge>
+          </div>
+        )}
 
         {/* Favorite Victim */}
         {player.favoriteVictim && (

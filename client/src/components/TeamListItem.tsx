@@ -2,10 +2,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import StreakBadge from "./StreakBadge";
-import { type TeamWithStreak, LEAGUES } from "@shared/schema";
+import { type TeamWithStreak, LEAGUES, type StreakPrediction } from "@shared/schema";
 import { formatFixtureDateTime, formatOdds, getBookmakerUrl, formatNextFixture } from "@shared/utils";
-import { Clock, ExternalLink, TrendingUp, ArrowLeftRight } from "lucide-react";
+import { Clock, ExternalLink, TrendingUp, ArrowLeftRight, Sparkles } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useQuery } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 
 interface TeamListItemProps {
   team: TeamWithStreak;
@@ -18,6 +20,21 @@ export default function TeamListItem({ team, className }: TeamListItemProps) {
   const bookmakerUrl = getBookmakerUrl(team.nextFixture.odds.bookmaker);
   const hasValidBookmakerUrl = bookmakerUrl !== '#';
   const isMobile = useIsMobile();
+  
+  const { data: prediction } = useQuery<StreakPrediction>({
+    queryKey: ['/api/predict/team', team.id],
+    queryFn: async () => {
+      const response = await fetch('/api/predict/team', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(team),
+      });
+      if (!response.ok) throw new Error('Prediction failed');
+      return response.json();
+    },
+    staleTime: 1000 * 60 * 30,
+    retry: false,
+  });
   
   // Get border color based on streak type
   const getBorderColor = () => {
@@ -72,6 +89,22 @@ export default function TeamListItem({ team, className }: TeamListItemProps) {
             </Link>
           </div>
         </div>
+
+        {prediction && (
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Sparkles className="h-4 w-4" />
+              <span>ML Forecast</span>
+            </div>
+            <Badge 
+              variant={prediction.confidenceScore >= 60 ? "default" : "secondary"}
+              className="text-xs font-semibold"
+              data-testid={`badge-prediction-${team.id}`}
+            >
+              {prediction.confidenceScore}% {prediction.prediction === 'continue' ? 'Continue' : 'Break'}
+            </Badge>
+          </div>
+        )}
 
         {/* Next Fixture */}
         <div className="space-y-2">

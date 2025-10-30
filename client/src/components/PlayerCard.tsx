@@ -3,10 +3,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link } from "wouter";
-import { type PlayerWithStreak, LEAGUES } from "@shared/schema";
+import { type PlayerWithStreak, LEAGUES, type StreakPrediction } from "@shared/schema";
 import { formatDate, formatFixtureDateTime, formatOdds, formatNextFixture } from "@shared/utils";
-import { Clock, ExternalLink, TrendingUp, Target } from "lucide-react";
+import { Clock, ExternalLink, TrendingUp, Target, Sparkles } from "lucide-react";
 import { parseISO } from "date-fns";
+import { useQuery } from "@tanstack/react-query";
 
 interface PlayerCardProps {
   player: PlayerWithStreak;
@@ -16,6 +17,21 @@ interface PlayerCardProps {
 export default function PlayerCard({ player, className }: PlayerCardProps) {
   const league = LEAGUES[player.leagueId];
   const { date: fixtureDate, time: fixtureTime } = formatFixtureDateTime(player.nextFixture.date);
+  
+  const { data: prediction } = useQuery<StreakPrediction>({
+    queryKey: ['/api/predict/player', player.id],
+    queryFn: async () => {
+      const response = await fetch('/api/predict/player', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(player),
+      });
+      if (!response.ok) throw new Error('Prediction failed');
+      return response.json();
+    },
+    staleTime: 1000 * 60 * 30,
+    retry: false,
+  });
   
   // Get position color
   const getPositionColor = (position: string) => {
@@ -113,6 +129,29 @@ export default function PlayerCard({ player, className }: PlayerCardProps) {
             </div>
           </div>
         </div>
+        
+        {prediction && (
+          <div className="space-y-2">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Sparkles className="h-4 w-4" />
+                <span>ML Forecast</span>
+              </div>
+              <Badge 
+                variant={prediction.confidenceScore >= 60 ? "default" : "secondary"}
+                className="text-xs font-semibold"
+                data-testid={`badge-prediction-${player.id}`}
+              >
+                {prediction.confidenceScore}% {prediction.prediction === 'continue' ? 'Scores' : 'Blank'}
+              </Badge>
+            </div>
+            <div className="text-xs text-muted-foreground">
+              {prediction.prediction === 'continue' 
+                ? `${prediction.confidenceScore}% chance to score again` 
+                : `${prediction.confidenceScore}% chance of a blank`}
+            </div>
+          </div>
+        )}
         
         {/* Next Fixture with Goalscorer Odds */}
         <div className="border-t pt-3 space-y-3">
