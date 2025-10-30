@@ -112,3 +112,74 @@ export function shortenTeamName(name: string): string {
 export function formatNextFixture(homeTeam: string, awayTeam: string): string {
   return `${shortenTeamName(homeTeam)} vs. ${shortenTeamName(awayTeam)}`;
 }
+
+export function extractTeamFeatures(team: any) {
+  const currentDate = new Date();
+  
+  const streakLength = team.recentMatches.filter(
+    (m: any) => m.result === (team.streakType === 'winning' ? 'W' : 'D')
+  ).length;
+  
+  const streakMatches = team.recentMatches.slice(0, streakLength);
+  
+  let totalMargin = 0;
+  let validMarginCount = 0;
+  
+  for (const match of streakMatches) {
+    if (match.score) {
+      const [homeGoals, awayGoals] = match.score.split('-').map(Number);
+      if (!isNaN(homeGoals) && !isNaN(awayGoals)) {
+        const margin = match.isHome 
+          ? homeGoals - awayGoals
+          : awayGoals - homeGoals;
+        totalMargin += margin;
+        validMarginCount++;
+      }
+    }
+  }
+  
+  const avgMargin = validMarginCount > 0 ? totalMargin / validMarginCount : 1.0;
+  
+  const lastMatchDate = new Date(team.recentMatches[0].date);
+  const daysSinceLastEvent = Math.floor(
+    (currentDate.getTime() - lastMatchDate.getTime()) / (1000 * 60 * 60 * 24)
+  );
+  
+  const historicalLongestStreak = streakLength + 1;
+  
+  return {
+    streakLength,
+    avgMargin: Math.round(avgMargin * 100) / 100,
+    daysSinceLastEvent: Math.max(0, daysSinceLastEvent),
+    historicalLongestStreak,
+    isHome: team.nextFixture.isHome,
+    leaguePosition: 10,
+  };
+}
+
+export function extractPlayerFeatures(player: any) {
+  const currentDate = new Date();
+  
+  const streakLength = player.consecutiveGoals.length;
+  
+  let totalGoals = 0;
+  for (const match of player.consecutiveGoals) {
+    totalGoals += match.goals;
+  }
+  const avgMargin = streakLength > 0 ? totalGoals / streakLength : 1.0;
+  
+  const lastMatchDate = new Date(player.consecutiveGoals[0]?.date || currentDate);
+  const daysSinceLastEvent = Math.floor(
+    (currentDate.getTime() - lastMatchDate.getTime()) / (1000 * 60 * 60 * 24)
+  );
+  
+  const historicalLongestStreak = streakLength + 1;
+  
+  return {
+    streakLength,
+    avgMargin: Math.round(avgMargin * 100) / 100,
+    daysSinceLastEvent: Math.max(0, daysSinceLastEvent),
+    historicalLongestStreak,
+    isHome: player.nextFixture.isHome,
+  };
+}

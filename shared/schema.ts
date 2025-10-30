@@ -255,9 +255,24 @@ export const playerWithStreakSchema = playerSchema.extend({
   streakLength: z.number(),
 });
 
+// Streak prediction schema
+export const streakPredictionSchema = z.object({
+  confidenceScore: z.number().min(0).max(100),
+  prediction: z.enum(['continue', 'break']),
+  features: z.object({
+    streakLength: z.number(),
+    avgMargin: z.number().optional(),
+    daysSinceLastEvent: z.number(),
+    historicalLongestStreak: z.number(),
+    isHome: z.boolean(),
+    leaguePosition: z.number().optional(),
+  }),
+});
+
 export type Team = z.infer<typeof teamSchema>;
 export type TeamWithStreak = z.infer<typeof teamWithStreakSchema>;
 export type Player = z.infer<typeof playerSchema>;
 export type PlayerWithStreak = z.infer<typeof playerWithStreakSchema>;
 export type BettingOdds = z.infer<typeof bettingOddsSchema>;
 export type NextFixture = z.infer<typeof nextFixtureSchema>;
+export type StreakPrediction = z.infer<typeof streakPredictionSchema>;
