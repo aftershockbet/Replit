@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { spawn } from "child_process";
 import { extractTeamFeatures, extractPlayerFeatures } from "@shared/utils";
-
+import path from "path"
 export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/predict/team", async (req, res) => {
     try {
@@ -52,9 +52,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
 function callPythonPredictor(features: any): Promise<any> {
   return new Promise((resolve, reject) => {
-    const python = spawn('python3.11', [
-      'server/ml/streak_predictor.py',
-      JSON.stringify(features)
+    const scriptPath = path.join(__dirname, "ml", "streak_predictor.py");
+
+
+
+    const python = spawn("python3.11", [
+
+
+    scriptPath,
+
+
+    JSON.stringify(features)
+
+
     ]);
 
     let output = '';
