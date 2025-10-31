@@ -8,7 +8,7 @@ packages = ["glibcLocales"]
 
 [deployment]
 deploymentTarget = "gce"
-build = ["npm", "run", "build"]
+build = "npm run build && pip install -r requirements.txt"
 run = ["npm", "run", "start"]
 
 [[ports]]
