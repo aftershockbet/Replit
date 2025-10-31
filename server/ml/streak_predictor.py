@@ -10,8 +10,8 @@ class StreakPredictor:
     def __init__(self):
         self.model = LogisticRegression(random_state=42, max_iter=1000)
         self.is_trained = False
-        self.model_path = 'server/ml/streak_model.pkl'
-        
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        self.model_path = os.path.join(script_dir, 'streak_model.pkl')
         if os.path.exists(self.model_path):
             try:
                 self.model = joblib.load(self.model_path)
