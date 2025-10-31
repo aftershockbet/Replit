@@ -52,7 +52,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
 function callPythonPredictor(features: any): Promise<any> {
   return new Promise((resolve, reject) => {
-    const python = spawn('python3', [
+    const python = spawn('python', [
       'server/ml/streak_predictor.py',
       JSON.stringify(features)
     ]);
