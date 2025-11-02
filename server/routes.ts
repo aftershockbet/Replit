@@ -56,20 +56,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
 function callPythonPredictor(features: any): Promise<any> {
   return new Promise((resolve, reject) => {
-    const scriptPath = path.join(__dirname, "ml", "streak_predictor.py");
-
-
+    const scriptPath = "/home/runner/workspace/server/ml/streak_predictor.py";
 
     const python = spawn("python3.11", [
-
-
     scriptPath,
-
-
     JSON.stringify(features)
-
-
     ]);
+
+    
+
 
     let output = '';
     let errorOutput = '';
